@@ -1,0 +1,43 @@
+body {
+	font-family: var(--font-Abril-Display-Regular);
+	color: var(--color-black);
+	font-size: 16px;
+}
+
+a {
+	text-decoration: none;
+	color: var(--link-color);
+	cursor: pointer;
+	// font-weight: var(--font-bold-default);
+}
+
+p {
+	font-size: 1.25rem;
+}
+
+.wrapper {
+	padding: 40px 30px;
+
+	@include for-bp("mobile-md") {
+	}
+
+	@include for-bp("tablet-switch") {
+	}
+
+	@include for-bp("tablet-lg") {
+		padding: 100px 10%;
+	}
+
+	@include for-bp("desktop-switch") {
+	}
+
+	@include for-bp("desktop-lg") {
+	}
+
+	@include for-bp("desktop-xl") {
+		max-width: 1320px; //1320px suggested by Bootstrap V5.3
+		margin: 0 auto;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

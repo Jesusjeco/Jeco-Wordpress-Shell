@@ -1,0 +1,40 @@
+header {
+	font-family: var(--font-oswald);
+	.wrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		padding-top: 10px;
+		padding-bottom: 10px;
+
+		.logo {
+			max-width: 150px;
+		}
+
+		.menu {
+			nav {
+				ul {
+					display: flex;
+					align-items: center;
+					list-style: none;
+					column-gap: 35px;
+
+					li {
+						a.nav-link:not(.button) {
+							text-transform: uppercase;
+							color: var(--color-black);
+							font-weight: 500;
+							font-size: 1.125rem;
+
+							@include for-bp("desktop-lg") {
+								font-size: 1.688rem;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

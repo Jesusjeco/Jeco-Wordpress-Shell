@@ -1,0 +1,23 @@
+$media-query-breakpoints: (
+	// mobile: 320px,
+	// mobile-sm: 375px,
+	mobile-md: 414px,
+	// mobile-lg: 620px,
+	tablet-switch: 720px,
+	// tablet-sm: 768px,
+	// tablet-md: 840px,
+	tablet-lg: 992px,
+	// tablet-xl: 1024px,
+	desktop-switch: 1180px,
+	 desktop-md: 1240px,
+	desktop-lg: 1400px,
+	desktop-xl: 1600px,
+	// wrapper-break: 1636px,
+);
+
+@mixin for-bp($bp) {
+	@media (min-width: map-get($media-query-breakpoints, $bp)) {
+		@content;
+	}
+}
+  

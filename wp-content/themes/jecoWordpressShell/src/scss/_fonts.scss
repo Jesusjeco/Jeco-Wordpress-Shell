@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+
+// Importing Display clean. Alternative to Better
+@font-face {
+	font-family: "Display-Clean";
+	src: url(#{$FONTS_PATH}/Display-Clean.ttf.woff) format("woff"),
+		url(#{$FONTS_PATH}/Display-Clean.ttf.svg#Display-Clean) format("svg"),
+		url(#{$FONTS_PATH}/Display-Clean.ttf.eot),
+		url(#{$FONTS_PATH}/Display-Clean.ttf.eot?#iefix)
+			format("embedded-opentype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+// Importing Abril Display font
+@font-face {
+	font-family: "Abril-Display-Regular";
+	src: url(#{$FONTS_PATH}/Abril_Display_Regular.otf) format("otf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+:root {
+	--font-oswald: "Oswald", sans-serif;
+	--font-displayClean: "Display-Clean";
+	--font-Abril-Display-Regular : "Abril-Display-Regular"; 
+	--font-bold-default: 500;
+	--font-weight-light: 300;
+}
+
+.h1 {
+	font-size: 4rem;
+}
+
+.title-3 {
+	font-family: var(--font-oswald);
+	font-size: 2.5rem;
+	text-transform: uppercase;
+}
