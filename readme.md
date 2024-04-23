@@ -2,7 +2,7 @@ The objective of this repository is to provide a basic starting shell to start d
 
 The repositori comes with the suggested wordpress and they will be changing depending on the new tendencies in security and settings.
 
-#Steps
+# Steps
 
 1- Once you cloned the repo, activate the plugins. It is recommended to acivated one by one so you can apply the configuration individually.
 
@@ -12,7 +12,7 @@ The repositori comes with the suggested wordpress and they will be changing depe
 
 4- Time to setup the enviroment
 
-#Enviroment
+# Enviroment
 
 1- be sure you are using a valid node js version. Run the command 
 ```
@@ -50,5 +50,9 @@ At last, run the gulp command again to compile your SCSS and make it available.
 
 You are all set.
 
-#Notes
-If you are going to do massive changes, you have the ```gulp watcher``` command available
+# Notes
+If you are going to do massive changes, you have the 
+```
+gulp watcher
+``` 
+command available
