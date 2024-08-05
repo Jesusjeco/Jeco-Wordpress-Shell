@@ -1,5 +1,7 @@
 <?php
-get_header();
+get_header(); ?>
+<h2>This is the blog php template</h2>
+<?php
 
 if (have_posts()) {
     while (have_posts()) {
