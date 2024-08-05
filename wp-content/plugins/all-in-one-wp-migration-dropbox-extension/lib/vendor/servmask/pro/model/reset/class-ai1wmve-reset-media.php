@@ -76,7 +76,12 @@ class Ai1wmve_Reset_Media {
 
 			// Set progress
 			if ( ! isset( $params['ai1wm_reset_plugins'], $params['ai1wm_reset_themes'], $params['ai1wm_reset_media'], $params['ai1wm_reset_database'] ) ) {
-				Ai1wm_Status::done( __( 'Reset Successful' ), __( 'The reset of your media files has been successfully completed. Your site\'s media library is now empty, and you can start afresh with new uploads.', AI1WM_PLUGIN_NAME ) );
+				$message = __( 'The reset of your media files has been successfully completed. Your site\'s media library is now empty, and you can start afresh with new uploads.', AI1WM_PLUGIN_NAME );
+				if ( defined( 'WP_CLI' ) && WP_CLI ) {
+					WP_CLI::success( $message );
+				} else {
+					Ai1wm_Status::done( __( 'Reset Successful' ), $message );
+				}
 				exit;
 			}
 

@@ -262,15 +262,6 @@ class Ai1wmde_Settings_Controller {
 		exit;
 	}
 
-	public static function sort_by_type_desc_name_asc( $first_item, $second_item ) {
-		$sorted_items = strcasecmp( $second_item['type'], $first_item['type'] );
-		if ( $sorted_items !== 0 ) {
-			return $sorted_items;
-		}
-
-		return strcasecmp( $first_item['name'], $second_item['name'] );
-	}
-
 	public static function folder() {
 		ai1wm_setup_environment();
 

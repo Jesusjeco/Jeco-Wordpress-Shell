@@ -141,6 +141,14 @@ if ( ! class_exists( 'Ai1wmve_Export_Retention_Base' ) ) {
 			return intval( get_option( $this->get_prefixed_option( 'backups' ), 0 ) );
 		}
 
+		/**
+		 * @deprecated Will be removed
+		 *
+		 * @param $first_backup
+		 * @param $second_backup
+		 *
+		 * @return int
+		 */
 		public static function sort_by_date_desc( $first_backup, $second_backup ) {
 			return intval( $second_backup['date'] ) - intval( $first_backup['date'] );
 		}
