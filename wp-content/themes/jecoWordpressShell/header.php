@@ -17,9 +17,9 @@
     $header_data = get_field('header_data', 'option');
     ?>
     <header>
+        <h1>Header</h1>
         <?php
-        // get_home_url();
-        // clean_custom_menus();
+         get_home_url();
+         clean_custom_menus();
         ?>
-        <p>Header</p>
     </header>

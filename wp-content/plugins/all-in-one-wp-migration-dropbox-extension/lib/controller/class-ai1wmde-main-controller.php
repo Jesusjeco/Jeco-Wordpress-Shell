@@ -376,6 +376,13 @@ class Ai1wmde_Main_Controller extends Ai1wmve_Main_Controller {
 	public function init() {
 		if ( isset( $_GET['ai1wmde_token'], $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'] ) && current_user_can( 'export' ) ) {
 			update_option( 'ai1wmde_dropbox_token', urldecode( $_GET['ai1wmde_token'] ) );
+			update_option( 'ai1wmde_offline', 1 );
+
+			if ( isset( $_GET['ai1wmde_full_access'] ) && $_GET['ai1wmde_full_access'] === 'yes' ) {
+				update_option( 'ai1wmde_dropbox_full_access', true );
+			} else {
+				delete_option( 'ai1wmde_dropbox_full_access' );
+			}
 
 			// Redirect to settings page
 			wp_redirect( network_admin_url( 'admin.php?page=ai1wmde_settings' ) );

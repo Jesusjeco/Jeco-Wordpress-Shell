@@ -62,6 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 								<form method="post" :action="actionUrl" id="ai1wmde-dropbox-access-form">
 									<input type="hidden" name="ai1wmde_client" id="ai1wmde-client" value="<?php echo esc_url( wp_nonce_url( network_admin_url( 'admin.php?page=ai1wmde_settings' ) ) ); ?>" />
+									<input type="hidden" name="ai1wmde_offline" id="ai1wmde-offline" value="1" />
 									<input type="hidden" name="ai1wmde_purchase_id" id="ai1wmde-purchase-id" value="<?php echo esc_attr( get_option( 'ai1wmde_plugin_key' ) ); ?>" />
 									<input type="hidden" name="ai1wmde_site_url" id="ai1wmde-site-url" value="<?php echo esc_attr( site_url() ); ?>" />
 									<input type="hidden" name="ai1wmde_admin_email" id="ai1wmde-admin-email" value="<?php echo esc_attr( get_option( 'admin_email' ) ); ?>" />

@@ -33,11 +33,18 @@ class Ai1wmde_Dropbox_Client {
 	const API_CONTENT_URL = 'https://content.dropboxapi.com/2';
 
 	/**
+	 * OAuth refresh token
+	 *
+	 * @var string
+	 */
+	protected $refresh_token = null;
+
+	/**
 	 * OAuth access token
 	 *
 	 * @var string
 	 */
-	protected $access_token = null;
+	protected static $access_token = null;
 
 	/**
 	 * SSL mode
@@ -60,9 +67,22 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	protected $retry_after = 0;
 
-	public function __construct( $access_token, $ssl = true ) {
-		$this->access_token = $access_token;
-		$this->ssl          = $ssl;
+	/**
+	 * Full dropbox access
+	 *
+	 * @var boolean
+	 */
+	protected $full_access = false;
+
+	public function __construct( $token, $ssl = true ) {
+		if ( get_option( 'ai1wmde_offline', false ) ) {
+			$this->refresh_token = $token;
+		} else {
+			static::$access_token = $token;
+		}
+
+		$this->full_access = (bool) get_option( 'ai1wmde_dropbox_full_access' );
+		$this->ssl         = $ssl;
 	}
 
 	/**
@@ -114,7 +134,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function upload_file( $file_data, $file_path ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_CONTENT_URL );
 		$api->set_option( CURLOPT_HEADER, true );
@@ -152,7 +172,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function upload_first_file_chunk( $file_chunk_data ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_CONTENT_URL );
 		$api->set_option( CURLOPT_HEADER, true );
@@ -191,7 +211,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function upload_next_file_chunk( $file_chunk_data, $session_id, $file_range_start = 0 ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_CONTENT_URL );
 		$api->set_option( CURLOPT_HEADER, true );
@@ -236,7 +256,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function upload_file_chunk_commit( $file_chunk_data, $file_path, $session_id, $file_range_start = 0 ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_CONTENT_URL );
 		$api->set_option( CURLOPT_HEADER, true );
@@ -286,7 +306,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function get_file( $file_stream, $file_path, $file_range_start = 0, $file_range_end = 0 ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_CONTENT_URL );
 		$api->set_option( CURLOPT_HEADER, true );
@@ -323,7 +343,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function get_file_content( $file_path ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_CONTENT_URL );
 		$api->set_option( CURLOPT_HEADER, true );
@@ -347,7 +367,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function create_folder( $folder_path ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_URL );
 		$api->set_path( '/files/create_folder_v2' );
@@ -382,7 +402,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function create_shared_link( $folder_path ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_URL );
 		$api->set_path( '/sharing/create_shared_link_with_settings' );
@@ -409,7 +429,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function revoke_shared_link( $url ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_URL );
 		$api->set_path( '/sharing/revoke_shared_link' );
@@ -435,7 +455,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function list_folder( $folder_path, $query_options = array() ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_URL );
 		$api->set_path( '/files/list_folder' );
@@ -546,7 +566,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	private function get_metadata( $path ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_URL );
 		$api->set_path( '/files/get_metadata' );
@@ -582,7 +602,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function delete( $file_path ) {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_URL );
 		$api->set_path( '/files/delete_v2' );
@@ -613,7 +633,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function get_account_info() {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_URL );
 		$api->set_path( '/users/get_current_account' );
@@ -637,7 +657,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function get_usage_info() {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_URL );
 		$api->set_path( '/users/get_space_usage' );
@@ -661,7 +681,7 @@ class Ai1wmde_Dropbox_Client {
 	 */
 	public function revoke() {
 		$api = new Ai1wmde_Dropbox_Curl;
-		$api->set_access_token( $this->access_token );
+		$api->set_access_token( $this->get_access_token() );
 		$api->set_ssl( $this->ssl );
 		$api->set_base_url( self::API_URL );
 		$api->set_path( '/auth/token/revoke' );
@@ -687,4 +707,53 @@ class Ai1wmde_Dropbox_Client {
 	public function rawurlencode_query( $query ) {
 		return str_replace( '%7E', '~', array_map( 'rawurlencode', array_filter( $query, 'is_scalar' ) ) );
 	}
-}
+
+	/**
+	 * Get access token
+	 *
+	 * @return string
+	 */
+	public function get_access_token() {
+		if ( static::$access_token ) {
+			return static::$access_token;
+		}
+
+		if ( time() < get_option( 'ai1wmde_dropbox_access_token_expires_in', false ) && ( static::$access_token = get_option( 'ai1wmde_dropbox_access_token', false ) ) ) {
+			return static::$access_token;
+		}
+
+		$api = new Ai1wmde_Dropbox_Curl;
+		$api->set_header( 'Content-Type', 'application/json' );
+		$api->set_ssl( $this->ssl );
+		if ( $this->full_access ) {
+			$api->set_base_url( AI1WMDE_REDIRECT_REFRESH_FULL_URL );
+		} else {
+			$api->set_base_url( AI1WMDE_REDIRECT_REFRESH_URL );
+		}
+		$api->set_option( CURLOPT_POST, true );
+		$api->set_option(
+			CURLOPT_POSTFIELDS,
+			json_encode(
+				array(
+					'token' => $this->refresh_token,
+				)
+			)
+		);
+
+		try {
+			$response = $api->make_request( true );
+		} catch ( Ai1wmde_Error_Exception $e ) {
+			throw $e;
+		}
+
+		if ( isset( $response['access_token'] ) ) {
+			static::$access_token = $response['access_token'];
+			update_option( 'ai1wmde_dropbox_access_token', $response['access_token'] );
+		}
+
+		if ( isset( $response['expires_in'] ) ) {
+			update_option( 'ai1wmde_dropbox_access_token_expires_in', time() + ( $response['expires_in'] - 10 * 60 ) );
+		}
+
+		return static::$access_token;
+	}}

@@ -245,7 +245,7 @@ if ( ! class_exists( 'Ai1wmve_Main_Controller' ) ) {
 				}
 				// Schedule event log actions
 				add_action( 'ai1wm_status_export_done', 'Ai1wmve_Schedules_Controller::log_success' );
-				add_action( 'ai1wm_status_export_fail', 'Ai1wmve_Schedules_Controller::log_failed' );
+				add_action( 'ai1wm_status_export_error', 'Ai1wmve_Schedules_Controller::log_failed', 10, 2 );
 
 				// Register stats collect actions if URL is defined
 				if ( defined( 'AI1WMVE_STATS_URL' ) ) {
