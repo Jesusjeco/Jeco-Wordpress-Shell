@@ -31,6 +31,14 @@ if ( class_exists( 'Ai1wm_Backup_WP_CLI_Base' ) && ! class_exists( 'Ai1wm_Backup
 
 	class Ai1wm_Backup_WP_CLI_Command extends Ai1wm_Backup_WP_CLI_Base {
 
+		protected $reset_types = array(
+			'plugins',
+			'themes',
+			'media',
+			'database',
+			'full',
+		);
+
 		/**
 		 * Creates a new backup.
 		 *
@@ -383,6 +391,133 @@ if ( class_exists( 'Ai1wm_Backup_WP_CLI_Base' ) && ! class_exists( 'Ai1wm_Backup
 			}
 
 			$this->run_restore( $params );
+		}
+
+		/**
+		 * Reset Hub functionality.
+		 *
+		 * ## OPTIONS
+		 *
+		 * <type>
+		 * : Type of reset (plugins, themes, media, database or full)
+		 *
+		 * --user=<id|login|email>
+		 * : Set the WordPress user
+		 *
+		 * [--backup]
+		 * : Create backup (snapshot) before reset
+		 *
+		 * ## EXAMPLES
+		 *
+		 * $ wp ai1wm reset database --user=1
+		 * Reset in progress...
+		 * Success: Reset complete.
+		 *
+		 * @subcommand reset
+		 */
+		public function reset( $args = array(), $assoc_args = array() ) {
+			$params = array(
+				'cli_args'   => $assoc_args,
+				'secret_key' => get_option( AI1WM_SECRET_KEY, false ),
+			);
+
+			if ( ! isset( $args[0] ) ) {
+				WP_CLI::error_multi_line(
+					array(
+						__( 'A reset type must be provided in order to proceed with the reset process.', AI1WM_PLUGIN_NAME ),
+						__( 'Example: wp ai1wm reset database', AI1WM_PLUGIN_NAME ),
+					)
+				);
+				exit;
+			}
+
+			if ( ! in_array( $args[0], $this->reset_types ) ) {
+				WP_CLI::error_multi_line(
+					array(
+						__( 'Unsupported reset type.', AI1WM_PLUGIN_NAME ),
+						sprintf( __( 'Supported types are: %s', AI1WM_PLUGIN_NAME ), implode( ', ', $this->reset_types ) ),
+					)
+				);
+				exit;
+			}
+
+			if ( ! current_user_can( 'export' ) ) {
+				WP_CLI::error( __( 'Insufficient permissions to run reset.', AI1WM_PLUGIN_NAME ) );
+			}
+
+			switch ( $args[0] ) {
+				case 'plugins':
+					$params['ai1wm_reset_plugins'] = 1;
+					break;
+
+				case 'themes':
+					$params['ai1wm_reset_themes'] = 1;
+					break;
+
+				case 'media':
+					$params['ai1wm_reset_media'] = 1;
+					break;
+
+				case 'database':
+					$params['ai1wm_reset_database'] = 1;
+					break;
+
+				default:
+					$params = array_merge(
+						$params,
+						array(
+							'ai1wm_reset_plugins'  => 1,
+							'ai1wm_reset_themes'   => 1,
+							'ai1wm_reset_media'    => 1,
+							'ai1wm_reset_database' => 1,
+						)
+					);
+			}
+
+			$user                           = wp_get_current_user();
+			$params['ai1wm_reset_password'] = readline( sprintf( __( 'To continue, enter your current user [%s] password: ', AI1WM_PLUGIN_NAME ), $user->user_login ) );
+
+			if ( isset( $assoc_args['backup'] ) ) {
+				$backup_params = $this->build_export_params( $args, $assoc_args );
+
+				$backup_params['ai1wm_reset_label'] = $args[0];
+				$backup_params['file']              = 1;
+
+				WP_CLI::log( '' );
+				$this->run_backup( $backup_params );
+				WP_CLI::log( '' );
+			}
+
+			try {
+				// Disable completed timeout
+				add_filter( 'ai1wm_completed_timeout', '__return_zero' );
+
+				// Run reset filters
+				Ai1wmve_Reset_Controller::reset( $params );
+			} catch ( Exception $e ) {
+				WP_CLI::error( __( sprintf( 'Unable to reset: %s', $e->getMessage() ), AI1WM_PLUGIN_NAME ) );
+			}
+		}
+
+		/**
+		 * Check for plugin updates
+		 *
+		 * ## EXAMPLES
+		 *
+		 * $ wp ai1wm check-for-updates
+		 * Success: Check for updates completed.
+		 *
+		 * @subcommand check-for-updates
+		 */
+		public function check_for_updates( $args = array(), $assoc_args = array() ) {
+			try {
+				// Check for updtes
+				Ai1wm_Updater::check_for_updates();
+
+				WP_CLI::success( __( 'Check for updates completed.', AI1WM_PLUGIN_NAME ) );
+			} catch ( Exception $e ) {
+				WP_CLI::error( __( sprintf( 'Unable to check for updates: %s', $e->getMessage() ), AI1WM_PLUGIN_NAME ) );
+			}
 		}
 	}
 }

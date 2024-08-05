@@ -42,6 +42,11 @@ define( 'AI1WMVE_CONTROLLER_PATH', AI1WMVE_PATH . DIRECTORY_SEPARATOR . 'control
 // ==============
 define( 'AI1WMVE_MODEL_PATH', AI1WMVE_PATH . DIRECTORY_SEPARATOR . 'model' );
 
+// ==============
+// = Utils Path =
+// ==============
+define( 'AI1WMVE_UTILS_PATH', AI1WMVE_PATH . DIRECTORY_SEPARATOR . 'utils' );
+
 // =============
 // = View Path =
 // =============

@@ -62,6 +62,10 @@ class Ai1wmde_Import_Database {
 		$model->set_notify_error_toggle( $settings['ai1wmde_dropbox_notify_error_toggle'] );
 		$model->set_notify_error_subject( $settings['ai1wmde_dropbox_notify_error_subject'] );
 		$model->set_notify_email( $settings['ai1wmde_dropbox_notify_email'] );
+		$model->set_offline( $settings['ai1wmde_offline'] );
+		$model->set_full_access( $settings['ai1wmde_dropbox_full_access'] );
+		$model->set_access_token( $settings['ai1wmde_dropbox_access_token'] );
+		$model->set_access_token_expires_in( $settings['ai1wmde_dropbox_access_token_expires_in'] );
 
 		// Set progress
 		Ai1wm_Status::info( __( 'Done updating Dropbox settings.', AI1WMDE_PLUGIN_NAME ) );

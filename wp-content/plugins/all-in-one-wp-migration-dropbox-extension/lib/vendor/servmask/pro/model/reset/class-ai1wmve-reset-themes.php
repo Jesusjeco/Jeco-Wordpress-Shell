@@ -91,7 +91,12 @@ class Ai1wmve_Reset_Themes {
 
 		// Set progress
 		if ( ! isset( $params['ai1wm_reset_plugins'], $params['ai1wm_reset_themes'], $params['ai1wm_reset_media'], $params['ai1wm_reset_database'] ) ) {
-			Ai1wm_Status::done( __( 'Reset Successful' ), __( 'Your theme has been successfully reset. All themes except the default WordPress theme have been removed, and the default theme is now active. This process has cleared all customizations and settings related to other themes. You can now start fresh with theme setup or install a new theme to customize your site\'s appearance.', AI1WM_PLUGIN_NAME ) );
+			$message = __( 'Your theme has been successfully reset. All themes except the default WordPress theme have been removed, and the default theme is now active. This process has cleared all customizations and settings related to other themes. You can now start fresh with theme setup or install a new theme to customize your site\'s appearance.', AI1WM_PLUGIN_NAME );
+			if ( defined( 'WP_CLI' ) && WP_CLI ) {
+				WP_CLI::success( $message );
+			} else {
+				Ai1wm_Status::done( __( 'Reset Successful' ), $message );
+			}
 			exit;
 		}
 

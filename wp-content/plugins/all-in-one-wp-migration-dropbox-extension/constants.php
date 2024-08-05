@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ==================
 // = Plugin Version =
 // ==================
-define( 'AI1WMDE_VERSION', '3.82' );
+define( 'AI1WMDE_VERSION', '3.85' );
 
 // ===============
 // = Plugin Name =
@@ -82,6 +82,16 @@ define( 'AI1WMDE_REDIRECT_CREATE_URL', 'https://redirect.wp-migration.com/v1/dro
 // ===================================
 define( 'AI1WMDE_REDIRECT_CREATE_FULL_URL', 'https://redirect.wp-migration.com/v1/dropbox-full/create' );
 
+// ========================
+// = Redirect Refresh URL =
+// ========================
+define( 'AI1WMDE_REDIRECT_REFRESH_URL', 'https://redirect.wp-migration.com/v1/dropbox/refresh' );
+
+// ====================================
+// = Redirect Refresh Full Access URL =
+// ====================================
+define( 'AI1WMDE_REDIRECT_REFRESH_FULL_URL', 'https://redirect.wp-migration.com/v1/dropbox-full/refresh' );
+
 // ===========================
 // = Default File Chunk Size =
 // ===========================
@@ -90,7 +100,7 @@ define( 'AI1WMDE_DEFAULT_FILE_CHUNK_SIZE', 4 * 1024 * 1024 );
 // ===============================
 // = Minimal Base Plugin Version =
 // ===============================
-define( 'AI1WMDE_MIN_AI1WM_VERSION', '7.80' );
+define( 'AI1WMDE_MIN_AI1WM_VERSION', '7.84' );
 
 // ===============
 // = Purchase ID =

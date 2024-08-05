@@ -49,6 +49,23 @@ if ( defined( 'AI1WMVE_PATH' ) ) {
 			'class-ai1wmve-export-retention-file.php';
 	}
 
+	// Here we check if utils classes are loaded
+	// as it might happen some extension to have
+	// older version of the pro package loaded
+	if ( ! class_exists( 'Ai1wmve_Array_Sorter' ) ) {
+		require_once dirname( __FILE__ ) .
+			DIRECTORY_SEPARATOR .
+			'utils' .
+			DIRECTORY_SEPARATOR .
+			'class-ai1wmve-array-sorter.php';
+
+		require_once dirname( __FILE__ ) .
+			DIRECTORY_SEPARATOR .
+			'utils' .
+			DIRECTORY_SEPARATOR .
+			'class-ai1wmve-file-sorter.php';
+	}
+
 	return;
 }
 
@@ -67,6 +84,16 @@ require_once dirname( __FILE__ ) .
 	DIRECTORY_SEPARATOR .
 	'functions.php';
 
+// Include utils
+require_once AI1WMVE_UTILS_PATH .
+	DIRECTORY_SEPARATOR .
+	'class-ai1wmve-array-sorter.php';
+
+require_once AI1WMVE_UTILS_PATH .
+	DIRECTORY_SEPARATOR .
+	'class-ai1wmve-file-sorter.php';
+
+// Include controllers
 require_once AI1WMVE_CONTROLLER_PATH .
 	DIRECTORY_SEPARATOR .
 	'class-ai1wmve-main-controller.php';
@@ -83,6 +110,7 @@ require_once AI1WMVE_CONTROLLER_PATH .
 	DIRECTORY_SEPARATOR .
 	'class-ai1wmve-reset-controller.php';
 
+// Include models
 require_once AI1WMVE_MODEL_PATH .
 	DIRECTORY_SEPARATOR .
 	'schedule' .

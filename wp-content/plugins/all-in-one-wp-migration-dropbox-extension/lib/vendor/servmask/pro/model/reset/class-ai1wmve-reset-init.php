@@ -32,7 +32,11 @@ class Ai1wmve_Reset_Init {
 	public static function execute( $params ) {
 
 		// Set progress
-		Ai1wm_Status::info( __( 'Your request is being processed. This may take a few moments. Please do not close this window or navigate away from this page while the reset is in progress.', AI1WM_PLUGIN_NAME ) );
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			WP_CLI::log( __( 'Reset in progress. This may take a few moments.', AI1WM_PLUGIN_NAME ) );
+		} else {
+			Ai1wm_Status::info( __( 'Your request is being processed. This may take a few moments. Please do not close this window or navigate away from this page while the reset is in progress.', AI1WM_PLUGIN_NAME ) );
+		}
 
 		// Check if password is provided
 		if ( ! isset( $params['ai1wm_reset_password'] ) ) {
