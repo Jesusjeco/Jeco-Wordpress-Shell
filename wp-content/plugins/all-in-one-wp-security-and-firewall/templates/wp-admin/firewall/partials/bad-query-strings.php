@@ -2,11 +2,13 @@
 <div class="postbox">
 		<h3 class="hndle"><label for="title"><?php _e('Bad query strings', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
 		<div class="inside">
-		<?php
-		global $aiowps_firewall_config;
-		//Display security info badge
-		$aiowps_feature_mgr->output_feature_details_badge("firewall-deny-bad-queries");
-		?>
+			<div id="firewall-deny-bad-queries-badge">
+				<?php
+				global $aiowps_firewall_config;
+				//Display security info badge
+				$aiowps_feature_mgr->output_feature_details_badge("firewall-deny-bad-queries");
+				?>
+			</div>
 
 		<table class="form-table">
 			<tr valign="top">

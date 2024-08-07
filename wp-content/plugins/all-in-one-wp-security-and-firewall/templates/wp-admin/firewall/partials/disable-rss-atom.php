@@ -2,10 +2,12 @@
 <div class="postbox">
 			<h3 class="hndle"><?php _e('Disable WordPress RSS and ATOM feeds', 'all-in-one-wp-security-and-firewall'); ?></h3>
 			<div class="inside">
-				<?php
-				//Display security info badge
-				$aiowps_feature_mgr->output_feature_details_badge("firewall-disable-rss-and-atom");
-				?>
+				<div id="firewall-disable-rss-and-atom-badge">
+					<?php
+					//Display security info badge
+					$aiowps_feature_mgr->output_feature_details_badge("firewall-disable-rss-and-atom");
+					?>
+				</div>
 				<table class="form-table">
 					<tr valign="top">
 						<th scope="row"><?php _e('Disable RSS and ATOM feeds:', 'all-in-one-wp-security-and-firewall'); ?></th>

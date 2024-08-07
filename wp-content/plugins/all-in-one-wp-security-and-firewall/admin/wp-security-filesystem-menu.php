@@ -293,12 +293,12 @@ class AIOWPSecurity_Filesystem_Menu extends AIOWPSecurity_Admin_Menu {
 			$trclass = "aio_table_row_green";
 		}
 		echo "<tr class=".$trclass.">";
-			echo '<td>' . $name . "</td>";
-			echo '<td>'. $path ."</td>";
-			echo '<td>' . $configmod . '</td>';
-			echo '<td>' . $recommended . '</td>';
+			echo '<td class="column-primary" data-colname="' . esc_attr(__('Name', 'all-in-one-wp-security-and-firewall')) . '">' . $name . '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __('Show more details', 'all-in-one-wp-security-and-firewall') . '</span></button>' . "</td>";
+			echo '<td data-colname="' . esc_attr(__('File/Folder', 'all-in-one-wp-security-and-firewall')) . '">' . $path . "</td>";
+			echo '<td data-colname="' . esc_attr(__('Current permissions', 'all-in-one-wp-security-and-firewall')) . '">' . $configmod . '</td>';
+			echo '<td data-colname="' . esc_attr(__('Recommended permissions', 'all-in-one-wp-security-and-firewall')) . '">' . $recommended . '</td>';
 			if ($fix) {
-				echo '<td>
+				echo '<td data-colname="' . esc_attr(__('Recommended action', 'all-in-one-wp-security-and-firewall')) . '">
 					<input type="submit" onclick="return set_file_permission_tochange(\'' . esc_js($path) . '\', \'' . esc_js($recommended) . '\')" name="aiowps_fix_permissions" value="' . esc_attr(__('Set recommended permissions', 'all-in-one-wp-security-and-firewall')) . '" class="button-secondary">
 					</td>';
 			} else {

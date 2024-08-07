@@ -2,11 +2,13 @@
 <div class="postbox">
 		<h3 class="hndle"><label for="title"><?php _e('Proxy comment posting', 'all-in-one-wp-security-and-firewall'); ?></label></h3>
 		<div class="inside">
-		<?php
-		global $aiowps_firewall_config;
-		//Display security info badge
-		$aiowps_feature_mgr->output_feature_details_badge("firewall-forbid-proxy-comments");
-		?>
+			<div id="firewall-forbid-proxy-comments-badge">
+				<?php
+				global $aiowps_firewall_config;
+				//Display security info badge
+				$aiowps_feature_mgr->output_feature_details_badge("firewall-forbid-proxy-comments");
+				?>
+			</div>
 
 		<table class="form-table">
 			<tr valign="top">

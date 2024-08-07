@@ -8,7 +8,7 @@ if (!class_exists('AIO_WP_Security')) {
 
 	class AIO_WP_Security {
 
-		public $version = '5.3.1';
+		public $version = '5.3.2';
 
 		public $db_version = '2.0.10';
 
@@ -377,7 +377,7 @@ if (!class_exists('AIO_WP_Security')) {
 		public function firewall_upgrade_handler() {
 			if (get_option('aiowpsec_firewall_version') != AIO_WP_SECURITY_FIREWALL_VERSION) {
 				AIOWPSecurity_Configure_Settings::set_firewall_configs();
-				AIOWPSecurity_Utility_Htaccess::write_to_htaccess();
+				AIOWPSecurity_Utility_Htaccess::write_to_htaccess(false);
 			}
 		}
 
@@ -386,7 +386,7 @@ if (!class_exists('AIO_WP_Security')) {
 				require_once(AIO_WP_SECURITY_PATH.'/classes/wp-security-installer.php');
 				AIOWPSecurity_Installer::run_installer();
 				AIOWPSecurity_Installer::set_cron_tasks_upon_activation();
-				AIOWPSecurity_Utility_Htaccess::write_to_htaccess();
+				AIOWPSecurity_Utility_Htaccess::write_to_htaccess(false);
 
 				/**
 				 * Update our config file's header if needed.

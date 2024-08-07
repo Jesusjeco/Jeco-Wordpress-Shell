@@ -6,10 +6,58 @@ if (class_exists('AIOWPSecurity_Commands')) return;
 
 if (!trait_exists('AIOWPSecurity_Log_Commands_Trait')) require_once(AIO_WP_SECURITY_PATH.'/classes/commands/wp-security-log-commands.php');
 if (!trait_exists('AIOWPSecurity_Ip_Commands_Trait')) require_once(AIO_WP_SECURITY_PATH.'/classes/commands/wp-security-ip-commands.php');
+if (!trait_exists('AIOWPSecurity_Firewall_Commands_Trait')) require_once(AIO_WP_SECURITY_PATH.'/classes/commands/wp-security-firewall-commands.php');
+if (!trait_exists('AIOWPSecurity_Tools_Commands_Trait')) require_once(AIO_WP_SECURITY_PATH.'/classes/commands/wp-security-tools-commands.php');
+if (!trait_exists('AIOWPSecurity_File_Scan_Commands_Trait')) require_once(AIO_WP_SECURITY_PATH.'/classes/commands/wp-security-file-scan-commands.php');
 class AIOWPSecurity_Commands {
 
 	use AIOWPSecurity_Log_Commands_Trait;
 	use AIOWPSecurity_Ip_Commands_Trait;
+	use AIOWPSecurity_Firewall_Commands_Trait;
+	use AIOWPSecurity_Tools_Commands_Trait;
+	use AIOWPSecurity_File_Scan_Commands_Trait;
+
+	/**
+	 * This variable holds an instance of AIOWPSecurity_Feature_Item_Manager.
+	 *
+	 * @var AIOWPSecurity_Feature_Item_Manager $aiowps_feature_mgr
+	 */
+	private $aiowps_feature_mgr;
+
+	/**
+	 * The initializes the AIOWPS Feature Manager
+	 *
+	 * @return bool
+	 */
+	private function feature_mgr_init() {
+		static $initialized = false;
+		if ($initialized && !empty($this->aiowps_feature_mgr)) return true;
+
+		$this->aiowps_feature_mgr = new AIOWPSecurity_Feature_Item_Manager();
+
+		$initialized = true;
+
+		return true;
+	}
+
+	/**
+	 * Retrieves the feature manager object.
+	 *
+	 * This method initializes the feature manager if necessary and returns the
+	 * AIOWPSecurity_Feature_Item_Manager instance. If the initialization fails or
+	 * the feature manager object is empty, it returns a WP_Error.
+	 *
+	 * @return AIOWPSecurity_Feature_Item_Manager|WP_Error
+	 */
+	private function get_feature_mgr_object() {
+
+		$do_init = $this->feature_mgr_init();
+
+		if (true === $do_init && !empty($this->aiowps_feature_mgr)) return $this->aiowps_feature_mgr;
+
+		return new WP_Error('not_initialized', __('The feature item manager could not be initialized.', 'all-in-one-wp-security-and-firewall'));
+	}
+
 	/**
 	 * Get IP address of given method.
 	 *
@@ -95,72 +143,6 @@ class AIOWPSecurity_Commands {
 		return array();
 	}
 
-	/**
-	 * Gets the last file scan result and returns the scan result HTML template
-	 *
-	 * @param array $data - the request data
-	 *
-	 * @return array
-	 */
-	public function get_last_scan_results($data) {
-		global $aio_wp_security;
-
-		$response = array(
-			'status' => 'success',
-			'messages' => array(),
-			'data' => array(),
-			'content' => array(),
-		);
-
-		if ($data['reset_change_detected']) $aio_wp_security->configs->set_value('aiowps_fcds_change_detected', false, true);
-
-		$fcd_data = AIOWPSecurity_Scan::get_fcd_data();
-
-		if (!$fcd_data || !isset($fcd_data['last_scan_result'])) {
-			// no fcd data found
-			$response['messages'][] = __('No previous scan data was found; either run a manual scan or schedule regular file scans', 'all-in-one-wp-security-and-firewall');
-			return $response;
-		}
-
-		$response['content'] = $aio_wp_security->include_template('wp-admin/scanner/scan-result.php', true, array('fcd_data' => $fcd_data));
-
-		return $response;
-	}
-
-	/**
-	 * Performs a file scan and returns the scan result
-	 *
-	 * @return array
-	 */
-	public function perform_file_scan() {
-		global $aio_wp_security;
-
-		$response = array(
-			'status' => 'success',
-			'messages' => array(),
-			'data' => array(),
-			'content' => array(),
-		);
-
-		$result = $aio_wp_security->scan_obj->execute_file_change_detection_scan();
-
-		if (false === $result) {
-			// error case
-			$response['messages'][] = __('There was an error during the file change detection scan.', 'all-in-one-wp-security-and-firewall') . ' ' . __('Please check the plugin debug logs.', 'all-in-one-wp-security-and-firewall');
-		}
-		
-		// If this is first scan display special message
-		if (1 == $result['initial_scan']) {
-			$response['messages'][] = __('This is your first file change detection scan.', 'all-in-one-wp-security-and-firewall').' '.__('The details from this scan will be used for future scans.', 'all-in-one-wp-security-and-firewall'). ' <a href="#" class="aiowps_view_last_fcd_results">' . __('View the file scan results', 'all-in-one-wp-security-and-firewall') . '</a>';
-			$response['content']['last_scan'] = '<a href="#" class="aiowps_view_last_fcd_results">' . __('View last file scan results', 'all-in-one-wp-security-and-firewall') . '</a>';
-		} elseif (!$aio_wp_security->configs->get_value('aiowps_fcds_change_detected')) {
-			$response['messages'][] = __('The scan is complete - There were no file changes detected.', 'all-in-one-wp-security-and-firewall');
-		} elseif ($aio_wp_security->configs->get_value('aiowps_fcds_change_detected')) {
-			$response['messages'][] = __('The scan has detected that there was a change in your website\'s files.', 'all-in-one-wp-security-and-firewall'). ' <a href="#" class="aiowps_view_last_fcd_results">' . __('View the file scan results', 'all-in-one-wp-security-and-firewall') . '</a>';
-		}
-
-		return $response;
-	}
 
 	/**
 	 * This is a helper function to save settings options using key/value pairs
@@ -173,6 +155,10 @@ class AIOWPSecurity_Commands {
 	public function save_settings($options, $callback = null) {
 		global $aio_wp_security;
 
+		$aiowps_feature_mgr = $this->get_feature_mgr_object();
+		if (is_wp_error($aiowps_feature_mgr)) return false;
+
+
 		foreach ($options as $key => $value) {
 			$aio_wp_security->configs->set_value($key, $value);
 		}
@@ -182,6 +168,9 @@ class AIOWPSecurity_Commands {
 		if (is_callable($callback)) {
 			call_user_func($callback, $options);
 		}
+
+		$aiowps_feature_mgr->calculate_total_feature_points();
+
 		return true;
 	}
 
@@ -193,12 +182,9 @@ class AIOWPSecurity_Commands {
 	 * @return string
 	 */
 	public function get_feature_details_badge($feature_id) {
-		ob_start();
-		$aiowps_feature_mgr = new AIOWPSecurity_Feature_Item_Manager();
-		//Recalculate points after the feature status/options have been altered
-		$aiowps_feature_mgr->check_feature_status_and_recalculate_points();
-		$aiowps_feature_mgr->output_feature_details_badge($feature_id);
-		return ob_get_clean();
+		$aiowps_feature_mgr = $this->get_feature_mgr_object();
+		if (is_wp_error($aiowps_feature_mgr)) return '';
+		return $aiowps_feature_mgr->output_feature_details_badge($feature_id, true);
 	}
 
 	/**

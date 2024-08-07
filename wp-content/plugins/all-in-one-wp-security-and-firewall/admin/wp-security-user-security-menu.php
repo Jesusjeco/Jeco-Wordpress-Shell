@@ -168,7 +168,7 @@ class AIOWPSecurity_User_Security_Menu extends AIOWPSecurity_Admin_Menu {
 				$errors .= __('You entered an invalid username, please enter another value.', 'all-in-one-wp-security-and-firewall');
 			}
 		} else { // No username value was entered
-			$errors .= __('Please enter a value for your username. ', 'all-in-one-wp-security-and-firewall');
+			$errors .= __('Please enter a value for your username.', 'all-in-one-wp-security-and-firewall');
 		}
 
 		if (strlen($errors) > 0) { // We have some validation or other error
