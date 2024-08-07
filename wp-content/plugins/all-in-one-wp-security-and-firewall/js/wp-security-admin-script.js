@@ -16,7 +16,7 @@
  */
 function aios_send_command(action, data, callback, options) {
 
-	default_options = {
+	var default_options = {
 		json_parse: true,
 		alert_on_error: true,
 		action: 'aios_ajax',
@@ -209,11 +209,11 @@ function aios_block_ui(message = aios_trans.saving) {
 			width: '500px',
 			border: 'none',
 			'border-radius': '10px',
-			left: 'calc(50% - 150px)',
+			left: 'calc(50% - 250px)',
 			top: 'calc(50% - 150px)',
 			padding: '20px'
 		},
-		message: '<div style="margin: 8px; font-size:150%;" class="aios_saving_popup"><img src="'+aios_trans.logo+'" height="80" width="80" style="padding-bottom:10px;"><br>'+message+'</div>'
+		message: '<div style="margin: 8px; font-size:150%;" class="aios_saving_popup"><img src="' + aios_trans.logo + '" height="80" width="80" style="padding-bottom:10px;"><br>' + message + '</div>'
 	});
 }
 
@@ -221,11 +221,12 @@ function aios_block_ui(message = aios_trans.saving) {
  * Display a success modal with optional message and icon.
  *
  * @param {Object|string} args - Configuration object or message string.
+ * @param {boolean} close_popup - Optional. If true, the popup will close automatically after 2 seconds. Default is true.
  *
  * @returns {void}
  */
-function aios_show_success_modal(args) {
-	if (typeof args == 'string') {
+function aios_show_success_modal(args, close_popup = true) {
+	if ('string' == typeof args) {
 		args = {
 			message: args
 		};
@@ -239,21 +240,35 @@ function aios_show_success_modal(args) {
 		},
 		args
 	);
+
+	var closeButtonHTML = '';
+	if (!close_popup) {
+		closeButtonHTML = '<button class="button aios-close-overlay"><span class="dashicons dashicons-no-alt"></span>' + data.close + '</button>';
+	}
+
 	jQuery.blockUI({
 		css: {
 			width: '500px',
 			border: 'none',
 			'border-radius': '10px',
-			left: 'calc(50% - 150px)',
-			top: 'calc(50% - 150px)'
+			left: 'calc(50% - 250px)',
+			top: 'calc(50% - 150px)',
+			cursor: 'default'
 		},
 		onOverlayClick: jQuery.unblockUI,
-		message: '<div class="aios_success_popup '+data.classes+'"><span class="dashicons dashicons-'+data.icon+'"></span><div class="aios_success_popup--message">'+data.message+'</div><button class="button aios-close-overlay"><span class="dashicons dashicons-no-alt"></span>'+data.close+'</button></div>'
+		message: '<div class="aios_success_popup ' + data.classes + '"><span class="dashicons dashicons-' + data.icon + '"></span><div class="aios_success_popup--message">' + data.message + '</div>' + closeButtonHTML + '</div>'
 	});
+
 	// close success popup
 	jQuery('.blockUI .aios-close-overlay').on('click', function() {
 		jQuery.unblockUI();
-	})
+	});
+
+	if (close_popup) {
+		setTimeout(function () {
+			jQuery.unblockUI();
+		}, 2000);
+	}
 }
 
 /**
@@ -272,7 +287,11 @@ function aios_submit_form(form, action, use_data = true, block_ui_message = aios
 	submitButton.prop('disabled', true);
 	var data = {};
 
-	if (typeof use_data === 'object') {
+	if ('function' === typeof pre_ajax_callback) {
+		pre_ajax_callback();
+	}
+
+	if ('object' === typeof use_data) {
 		data = use_data; // Use custom data object
 	} else if (use_data) {
 		var dataArray = form.serializeArray();
@@ -281,13 +300,10 @@ function aios_submit_form(form, action, use_data = true, block_ui_message = aios
 			data[dataArray[i].name] = dataArray[i].value;
 		}
 	}
-	if (typeof pre_ajax_callback === 'function') {
-		pre_ajax_callback();
-	}
 	aios_send_command(action, data, function(response) {
 		aios_handle_ajax_update(response, post_ajax_callback);
 		submitButton.prop('disabled', false);
-	})
+	});
 }
 
 /**
@@ -305,6 +321,7 @@ function aios_handle_ajax_update(response, callback) {
 
 	if (update_message) {
 		var messageContainer = jQuery('<div></div>');
+		var close_popup = true;
 
 		// display single message
 		if (response.hasOwnProperty('message')) {
@@ -313,9 +330,10 @@ function aios_handle_ajax_update(response, callback) {
 		}
 
 		if (response.hasOwnProperty('info') && response.info.length > 0) {
+			close_popup = false;
 			// info toggle
-			let toggle = jQuery('<span>' + aios_trans.show_notices + ' (<a href="#" id="aios_ajax_showmoreoptions">'+aios_trans.show_info+'</a>)</span>');
-			toggle.appendTo(messageContainer)
+			let toggle = jQuery('<span>' + aios_trans.show_notices + ' (<a href="#" id="aios_ajax_showmoreoptions">' + aios_trans.show_info + '</a>)</span>');
+			toggle.appendTo(messageContainer);
 
 
 			let infoContainer = jQuery('<div id="aios_ajax_moreoptions" class="aiowps_more_info_body" style="display:none;"></div>');
@@ -332,18 +350,18 @@ function aios_handle_ajax_update(response, callback) {
 				message: messageContainer.html(),
 				icon: 'no-alt',
 				classes: 'warning'
-			});
+			}, false);
 		} else {
-			aios_show_success_modal(messageContainer.html())
+			aios_show_success_modal(messageContainer.html(), close_popup);
 		}
 	} else {
-		aios_show_success_modal(aios_trans.completed)
+		jQuery.unblockUI();
 	}
 
 	// update contents on the page
 	if (response.hasOwnProperty('content')) {
 		jQuery.each(response.content, function(key, value) {
-			aios_update_content('#' + key, value)
+			aios_update_content('#' + key, value);
 		});
 	}
 
@@ -356,11 +374,11 @@ function aios_handle_ajax_update(response, callback) {
 
 	// update badges
 	if (response.hasOwnProperty('badges')) {
-		aios_update_badge(response.badges)
+		aios_update_badge(response.badges);
 	}
 
-	if (typeof callback === 'function') {
-		callback();
+	if ('function' === typeof callback) {
+		callback(response);
 	}
 }
 
@@ -368,24 +386,29 @@ jQuery(function($) {
 	//Add Generic Admin Dashboard JS Code in this file
 
 	//Media Uploader - start
-	jQuery("#aiowps_restore_htaccess_form").submit(function(e) {
+	jQuery("#aiowps_restore_htaccess_form").on('submit', function(e) {
 		e.preventDefault();
 		aios_read_restore_file(this, 'htaccess');
 	});
 
-	jQuery("#aiowps_restore_wp_config_form").submit(function(e) {
+	jQuery("#aiowps_restore_wp_config_form").on('submit', function(e) {
 		e.preventDefault();
 		aios_read_restore_file(this, 'wp_config');
 	});
 
-	jQuery("#aiowps_restore_settings_form").submit(function(e) {
+	jQuery("#aiowps_restore_settings_form").on('submit', function(e) {
 		e.preventDefault();
 		aios_read_restore_file(this, 'import_settings');
 	});
-
+	/**
+	 * Reads the contents of a selected file and submits the form after populating a hidden input with the file contents.
+	 *
+	 * @param {HTMLFormElement} form - The form element to submit after reading the file contents.
+	 * @param {string} 			file - The type of file to read ('htaccess', 'wp_config', 'import_settings').
+	 */
 	function aios_read_restore_file(form, file) {
 		var aios_import_file_input = document.getElementById('aiowps_' + file + '_file');
-		if (aios_import_file_input.files.length == 0) {
+		if (0 == aios_import_file_input.files.length) {
 			alert(aios_trans.no_import_file);
 			return;
 		}
@@ -400,20 +423,28 @@ jQuery(function($) {
 	//End of Media Uploader
 	
 	// Triggers the more info toggle link
-	$(".aiowps_more_info_body").hide();//hide the more info on page load
-	$('.aiowps_more_info_anchor').on('click', function() {
-		$(this).next(".aiowps_more_info_body").animate({ "height": "toggle"});
-		var toggle_char_ref = $(this).find(".aiowps_more_info_toggle_char");
-		var toggle_char_value = toggle_char_ref.text();
-		if (toggle_char_value === "+") {
-			toggle_char_ref.text("-");
-		} else {
-			 toggle_char_ref.text("+");
-		}
-	});
+	jQuery(".aiowps_more_info_body").hide();//hide the more info on page load
+	function toggleMoreInfo() {
+		jQuery('.aiowps_more_info_anchor').on('click', function () {
+			jQuery(this).next(".aiowps_more_info_body").animate({"height": "toggle"});
+			var toggle_char_ref = jQuery(this).find(".aiowps_more_info_toggle_char");
+			var toggle_char_value = toggle_char_ref.text();
+			if ("+" === toggle_char_value) {
+				toggle_char_ref.text("-");
+			} else {
+				toggle_char_ref.text("+");
+			}
+		});
+	}
+	toggleMoreInfo();
 	//End of more info toggle
 
-	//This function uses javascript to retrieve a query arg from the current page URL
+	/**
+	 * This function uses javascript to retrieve a query arg from the current page URL
+	 *
+	 * @param {string} name - The name of the query parameter to retrieve.
+	 * @returns {string|null} The value of the query parameter, or null if the parameter does not exist.
+	 */
 	function getParameterByName(name) {
 		var url = window.location.href;
 		name = name.replace(/[\[\]]/g, "\\$&");
@@ -435,12 +466,12 @@ jQuery(function($) {
 
 	// Start of CAPTCHA handling
 	jQuery('.wrap').on('change', '#aiowps_default_captcha', function () {
-		var selected_captcha = $(this).val();
+		var selected_captcha = jQuery(this).val();
 		jQuery('.captcha_settings').hide();
 		jQuery('#aios-'+ selected_captcha).show();
 		
 		if ('none' === selected_captcha) {
-			jQuery('#aios-captcha-options').hide()
+			jQuery('#aios-captcha-options').hide();
 		} else {
 			jQuery('#aios-captcha-options').show();
 		}
@@ -459,13 +490,14 @@ jQuery(function($) {
 		if ('undefined' == typeof file_entities) file_entities = '';
 		var exclude_files = file_entities ? 0 : 1;
 
-		if (typeof updraft_backupnow_inpage_go === 'function') {
+		if ('function' === typeof updraft_backupnow_inpage_go) {
 			updraft_backupnow_inpage_go(function () {
 				// Close the backup dialogue.
-				$('#updraft-backupnow-inpage-modal').dialog('close');
+				jQuery('#updraft-backupnow-inpage-modal').dialog('close');
 			}, file_entities, 'autobackup', 0, exclude_files, 0);
 		}
 	}
+
 	if (jQuery('#aios-manual-db-backup-now').length) {
 		jQuery('#aios-manual-db-backup-now').on('click', function (e) {
 			e.preventDefault();
@@ -479,22 +511,25 @@ jQuery(function($) {
 		jQuery('.tfa-premium').hide();
 	}
 
-
 	// Start of trash spam comments toggle handling
 	jQuery('input[name=aiowps_enable_trash_spam_comments]').on('click', function() {
 		jQuery('input[name=aiowps_trash_spam_comments_after_days]').prop('disabled', !jQuery(this).prop('checked'));
 	});
 	// End of trash spam comments toggle handling
 
-	// Copies text using the deprecated document.execCommand method
+	/**
+	 * Copies text to the clipboard using the deprecated document.execCommand method.
+	 *
+	 * @param {string} text - The text to be copied to the clipboard.
+	 */
 	function deprecated_copy(text) {
-		var $temp = $('<input>');
-		$('body').append($temp);
+		var $temp = jQuery('<input>');
+		jQuery('body').append($temp);
 		$temp.val(text).select();
 		if (document.execCommand('copy')) {
 			alert(aios_trans.copied);
 		}
-		$temp.remove()
+		$temp.remove();
 	}
 
 	// Start of copy-to-clipboard click handling
@@ -531,86 +566,189 @@ jQuery(function($) {
 		confirm(jQuery(this).data('message')) ? aios_send_command('unlock_ip', {ip: jQuery(this).data('ip')}, function(response) {
 			jQuery('#aios_message').remove();
 			jQuery('#wpbody-content .wrap h2:first').after(response.message);
-			if (response.status === 'success') $('#locked-ip-list-table').load(' #locked-ip-list-table > *');
-		}): false
+			if ('success' === response.status) jQuery('#locked-ip-list-table').load(' #locked-ip-list-table > *');
+		}) : false;
 	});
 
-	jQuery("#locked-ip-list-table").on('click', '.aios-delete-locked-ip-record-button', function(e) {
+	jQuery("#locked-ip-list-table").on('click', '.aios-delete-locked-ip-record', function(e) {
 		e.preventDefault();
 		confirm(jQuery(this).data('message')) ? aios_send_command('delete_locked_ip_record', {id: jQuery(this).data('id')}, function(response) {
 			jQuery('#aios_message').remove();
 			jQuery('#wpbody-content .wrap h2:first').after(response.message);
-			if (response.status === 'success') $('#locked-ip-list-table').load(' #locked-ip-list-table > *');
-		}): false
+			if ('success' === response.status) jQuery('#locked-ip-list-table').load(' #locked-ip-list-table > *');
+		}) : false;
 	});
 
 	jQuery("#permanent-ip-list-table").on('click', '.aios-unblock-permanent-ip', function(e) {
 		e.preventDefault();
 		confirm(jQuery(this).data('message')) ? aios_send_command('blocked_ip_list_unblock_ip', {id: jQuery(this).data('id')}, function(response) {
 			jQuery('#aios_message').remove();
-			jQuery('#wpbody-content .wrap h2:first').after(response.message)
-			if (response.status === 'success') $('#permanent-ip-list-table').load(' #permanent-ip-list-table > *');
-		}): false
+			jQuery('#wpbody-content .wrap h2:first').after(response.message);
+			if ('success' === response.status) jQuery('#permanent-ip-list-table').load(' #permanent-ip-list-table > *');
+		}) : false;
 	});
-	
+
 	jQuery("#audit-log-list-table").on('click', '.aios-delete-audit-log', function(e) {
 		e.preventDefault();
 		confirm(jQuery(this).data('message')) ? aios_send_command('delete_audit_log', {id: jQuery(this).data('id')}, function(response) {
 			jQuery('#aios_message').remove();
 			jQuery('#wpbody-content .wrap h2:first').after(response.message);
-			if (response.status === 'success') $('#audit-log-list-table').load(' #audit-log-list-table > *');
-		}): false;
+			if ('success' === response.status) jQuery('#audit-log-list-table').load(' #audit-log-list-table > *');
+		}) : false;
 	});
 
-	jQuery("#audit-log-list-table .aios-unlock-ip-button").on('click', function(e) {
+	jQuery("#audit-log-list-table").on('click', '.aios-unlock-ip-button', function(e) {
 		e.preventDefault();
 		confirm(jQuery(this).data('message')) ? aios_send_command('unlock_ip', {ip: jQuery(this).data('ip')}, function(response) {
 			jQuery('#aios_message').remove();
 			jQuery('#wpbody-content .wrap h2:first').after(response.message);
-			if (response.status === 'success') $('#audit-log-list-table').load(' #audit-log-list-table > *');
+			if ('success' === response.status) jQuery('#audit-log-list-table').load(' #audit-log-list-table > *');
 		}) : false;
 	});
 
-	jQuery("#audit-log-list-table .aios-unblacklist-ip-button").on('click', function(e) {
+	jQuery("#audit-log-list-table").on('click', '.aios-unblacklist-ip-button', function(e) {
 		e.preventDefault();
 		confirm(jQuery(this).data('message')) ? aios_send_command('unblacklist_ip', {ip: jQuery(this).data('ip')}, function(response) {
 			jQuery('#aios_message').remove();
 			jQuery('#wpbody-content .wrap h2:first').after(response.message);
-			if (response.status === 'success') $('#audit-log-list-table').load(' #audit-log-list-table > *');
+			if ('success' === response.status) jQuery('#audit-log-list-table').load(' #audit-log-list-table > *');
 		}) : false;
 	});
 
-	jQuery("#audit-log-list-table .aios-lock-ip-button").on('click', function(e) {
+	jQuery("#audit-log-list-table").on('click', '.aios-lock-ip-button', function(e) {
 		e.preventDefault();
 		confirm(jQuery(this).data('message')) ? aios_send_command('lock_ip', {ip: jQuery(this).data('ip'), lock_reason: 'audit-log'}, function(response) {
 			jQuery('#aios_message').remove();
 			jQuery('#wpbody-content .wrap h2:first').after(response.message);
-			if (response.status === 'success') $('#audit-log-list-table').load(' #audit-log-list-table > *');
+			if ('success' === response.status) jQuery('#audit-log-list-table').load(' #audit-log-list-table > *');
 		}) : false;
 	});
 
-	jQuery("#audit-log-list-table .aios-blacklist-ip-button").on('click', function(e) {
+	jQuery("#audit-log-list-table").on('click', '.aios-blacklist-ip-button', function(e) {
 		e.preventDefault();
 		confirm(jQuery(this).data('message')) ? aios_send_command('blacklist_ip', {ip: jQuery(this).data('ip')}, function(response) {
 			jQuery('#aios_message').remove();
 			jQuery('#wpbody-content .wrap h2:first').after(response.message);
-			if (response.status === 'success') $('#audit-log-list-table').load(' #audit-log-list-table > *');
+			if ('success' === response.status) jQuery('#audit-log-list-table').load(' #audit-log-list-table > *');
 		}) : false;
 	});
 
-	jQuery("#aios-clear-debug-logs").on('submit', function(e) {
+	jQuery("#aios-clear-debug-logs").on('click', '.aios-clear-debug-logs', function(e) {
 		e.preventDefault();
-		aios_send_command('clear_debug_logs', {}, function(response) {
-			jQuery('#aios_message').remove();
-			jQuery('#wpbody-content .wrap h2:first').after(response.message);
-			if ("success" === response.status) $('#debug-list-table').load(' #debug-list-table > *');
-		})
+		if (confirm(jQuery(this).data('message'))) {
+			aios_send_command('clear_debug_logs', {}, function(response) {
+				jQuery('#aios_message').remove();
+				jQuery('#wpbody-content .wrap h2:first').after(response.message);
+				if ("success" === response.status) $('#debug-list-table').load(' #debug-list-table > *');
+			});
+		}
 	});
 	// End of dashboard menu ajaxify
+
+	// Firewall menu ajaxify
+	jQuery('#aios-php-firewall-settings-form').on('submit', function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this), 'perform_php_firewall_settings', true, aios_trans.saving, null, function(response) {
+			if ("success" === response.status) {
+				jQuery('.aio_orange_box').remove();
+				jQuery('#post-body h2:first').after(response.xmlprc_warning);
+			}
+		});
+	});
+
+	jQuery('#aios-htaccess-firewall-settings-form').on('submit', function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this),'perform_htaccess_firewall_settings');
+	});
+
+	jQuery("#aios-rest-api-settings-form").on('submit', function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this),'perform_save_wp_rest_api_settings');
+	});
+
+	jQuery("#aios-blacklist-settings-form").on('submit', function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this),'perform_save_blacklist_settings');
+	});
+
+	jQuery("#aios-internet-bots-settings-form").on('submit', function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this),'perform_internet_bot_settings');
+	});
+
+	jQuery("#aios-firewall-allowlist-form").on('submit', function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this),'perform_firewall_allowlist');
+	});
+
+	jQuery("#aios-6g-firewall-settings-form").on('submit', function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this), 'perform_xG_firewall_settings', true, aios_trans.saving, null, function(response) {
+			if ("success" === response.status) {
+				var aiowps_enable_6g_firewall = jQuery('#aiowps_enable_6g_firewall').prop('checked');
+				if (aiowps_enable_6g_firewall) {
+					jQuery('.aios-toggle-advanced-options').removeClass('advanced-options-disabled');
+					jQuery('.aiowps_more_info_body').hide();
+				} else {
+					jQuery('.aios-toggle-advanced-options').addClass('advanced-options-disabled');
+					jQuery('.button.button-link.aios-toggle-advanced-options').removeClass('opened');
+				}
+			}
+		})
+	});
+
+	jQuery('#aiowps-firewall-status-container').on('submit', "#aiowpsec-firewall-setup-form", function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this), 'perform_setup_firewall', true, aios_trans.setting_up_firewall, null, function (response) {
+			jQuery("#aios-firewall-setup-notice").remove();
+			jQuery('#wpbody-content .wrap h2:first').after(response.info_box);
+		});
+	});
+
+	jQuery('#aiowps-firewall-status-container').on('submit', "#aiowps-firewall-downgrade-form", function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this), 'perform_downgrade_firewall', true, aios_trans.downgrading_firewall, null, function (response) {
+			jQuery("#aios-firewall-installed-notice").remove();
+			jQuery('#wpbody-content .wrap h2:first').after(response.info_box);
+		});
+	});
+	// end of firewall menu ajax
 
 	// Start of file scan handling
 	jQuery('.aiowps_next_scheduled_scan_wrapper').on('click', '.aiowps_view_last_fcd_results', view_scan_results_handler);
 	jQuery('#aiowps_fcds_change_detected').on('click', '.aiowps_view_last_fcd_results', view_scan_results_handler);
+
+	// start of tools menu ajaxify
+	jQuery("#aiowpsec-whois-lookup-form").on('submit', function(e) {
+		e.preventDefault();
+
+		jQuery('#aios-who-is-lookup-result-container').html('');
+
+		aios_submit_form(jQuery(this), 'perform_whois_lookup', true, aios_trans.processing, null, function () {
+			var targetOffset = jQuery('#aios-who-is-lookup-result-container').offset().top;
+			jQuery('html, body').animate({ scrollTop: targetOffset }, 'slow');
+		});
+	});
+
+	jQuery("#aiowpsec-site-lockout-form").on('submit', function (e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this), 'perform_general_visitor_lockout', true, aios_trans.saving, function () {
+			var editor = tinyMCE.get('aiowps_site_lockout_msg_editor_content');
+			if (editor) {
+				editor.save();
+			}
+		});
+	});
+
+	jQuery("#aiowpsec-save-custom-rules-settings-form").on('submit', function (e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this), 'perform_store_custom_htaccess_settings');
+	});
+	// end  of tools menu ajaxify
+	jQuery('#aiowpsec-scheduled-fcd-scan-form').on('submit', function(e) {
+		e.preventDefault();
+		aios_submit_form(jQuery(this), 'perform_save_file_detection_change_settings');
+	});
 
 	/**
 	 * This function handles the view last scan result event
@@ -620,32 +758,26 @@ jQuery(function($) {
 	function view_scan_results_handler(e) {
 		e.preventDefault();
 		
-		var reset_change_detected = $(this).data('reset_change_detected') ? 1 : 0;
-		
-		aios_send_command('get_last_scan_results', { reset_change_detected: reset_change_detected}, function(resp) {
-			if (resp.hasOwnProperty('content')) {
-				if (reset_change_detected) jQuery('#aiowps_fcds_change_detected').remove();
-				jQuery('#aiowps_previous_scan_wrapper').html(resp.content);
-			}
-		});
+		var reset_change_detected = jQuery(this).data('reset_change_detected') ? 1 : 0;
+
+		aios_submit_form(jQuery(this), 'get_last_scan_results', { reset_change_detected: reset_change_detected}, aios_trans.processing, null, function (response) {
+			if (reset_change_detected) jQuery('#aiowps_fcds_change_detected').remove();
+			var targetOffset = jQuery('#aiowps_previous_scan_wrapper').offset().top;
+			jQuery('html, body').animate({ scrollTop: targetOffset }, 'slow');
+		})
 	}
 
 	jQuery('#aiowps_manual_fcd_scan').on('click', function(e) {
 		e.preventDefault();
 
-		jQuery('#aiowps_activejobs_table').html('<p><span class="aiowps_spinner spinner">'+ aios_trans.processing + '</span></p>');
-		jQuery('#aiowps_activejobs_table .aiowps_spinner').addClass('visible');
-
-		aios_send_command('perform_file_scan', {}, function (resp) {
-			if (resp.hasOwnProperty('content')) {
-				jQuery('#aiowps-previous-files-scan-inner').html(resp.content.last_scan);
-			}
-			if (resp.hasOwnProperty('messages')) {
+		aios_submit_form(jQuery(this), 'perform_file_scan', true, aios_trans.scanning, function () {
+			jQuery('#aiowps_activejobs_table').html('<p><span class="aiowps_spinner spinner">'+ aios_trans.processing + '</span></p>');
+			jQuery('#aiowps_activejobs_table .aiowps_spinner').addClass('visible');
+			}, function (response) {
 				jQuery('#aiowps_activejobs_table').html('');
-				resp.messages.forEach(function(message) {
-					jQuery('#aiowps_activejobs_table').append('<p>'+message+'</p>');
-				});
-			}
+				if (response.hasOwnProperty('result')) {
+					jQuery('#aiowps_activejobs_table').append('<p>'+response.result+'</p>');
+				}
 		});
 	});
 	// End of file scan handling
@@ -692,9 +824,9 @@ jQuery(function($) {
 
 	// click the show more for AJAX info
 	jQuery(document).on('click','#aios_ajax_showmoreoptions', function (e) {
-		e.preventDefault()
+		e.preventDefault();
 		let moreOptions = jQuery('#aios_ajax_moreoptions');
-		moreOptions.toggle()
+		moreOptions.toggle();
 		// Toggle text between "Show more" and "Hide"
 		let newText = moreOptions.is(':visible') ? aios_trans.hide_info : aios_trans.show_info;
 		jQuery(this).text(newText);

@@ -192,7 +192,7 @@ class AIOWPSecurity_List_Registered_Users extends AIOWPSecurity_List_Table {
 			if ('' != $failed_accts) {
 				//display any failed account updates
 				rtrim($failed_accts);
-				AIOWPSecurity_Admin_Menu::show_msg_error_st(__('The following accounts failed to update successfully: ', 'all-in-one-wp-security-and-firewall') . $failed_accts);
+				AIOWPSecurity_Admin_Menu::show_msg_error_st(__('The following accounts failed to update successfully:', 'all-in-one-wp-security-and-firewall') . ' ' . $failed_accts);
 			}
 		} elseif (null != $entries) {
 			$entries = esc_sql($entries);
@@ -225,7 +225,7 @@ class AIOWPSecurity_List_Registered_Users extends AIOWPSecurity_List_Table {
 		$to_email_address = $user->user_email;
 		$email_msg = '';
 		$subject = '['.network_site_url().'] '. __('Your account is now active', 'all-in-one-wp-security-and-firewall');
-		$email_msg .= __('Your account with username: ', 'all-in-one-wp-security-and-firewall') . $user->user_login . __(' is now active', 'all-in-one-wp-security-and-firewall') . "\n";
+		$email_msg .= sprintf(__('Your account with username: %s is now active', 'all-in-one-wp-security-and-firewall'), $user->user_login) . "\n";
 		$subject = apply_filters('aiowps_register_approval_email_subject', $subject);
 		$email_msg = apply_filters('aiowps_register_approval_email_msg', $email_msg, $user); //also pass the WP_User object
 		

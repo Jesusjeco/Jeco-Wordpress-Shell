@@ -248,7 +248,13 @@ class AIOWPSecurity_Captcha {
 	}
 
 	/**
-	 * Explicit render CAPTCHA on WooCommerce my account page forms or if not just render normally
+	 * Insert CAPTCHA question form on WooCommerce my account page forms or other forms.
+	 *
+	 * This function determines the type of CAPTCHA to display based on the configured default CAPTCHA type.
+	 * It handles special cases for WooCommerce "my account" page where both login and register forms need
+	 * CAPTCHAs rendered explicitly. For other forms, it renders CAPTCHA normally.
+	 *
+	 * @global object $aio_wp_security The global instance of the aio_wp_security class, which holds configuration settings.
 	 *
 	 * @return void
 	 */

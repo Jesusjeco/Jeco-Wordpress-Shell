@@ -125,10 +125,8 @@ if (!class_exists('AIOWPSecurity_Ajax')) :
 				'delete_locked_ip_record',
 				'clear_debug_logs',
 				'unlock_ip',
-				'unblacklist_ip',
 				'blocked_ip_list_unblock_ip',
 				'lock_ip',
-				'blacklist_ip',
 				'dismiss_notice',
 			));
 

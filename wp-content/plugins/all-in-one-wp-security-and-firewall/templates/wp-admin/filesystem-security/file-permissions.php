@@ -26,10 +26,10 @@
 				<?php wp_nonce_field('aiowpsec-fix-permissions-nonce'); ?>
 				<input type="hidden" name="aiowps_permission_chg_file" id="aiowps_permission_chg_file" value="">
 				<input type="hidden" name="aiowps_recommended_permissions" id="aiowps_recommended_permissions" value="">
-				<table class="widefat file_permission_table">
+				<table class="wp-list-table widefat file_permission_table">
 					<thead>
 						<tr>
-							<th><?php _e('Name', 'all-in-one-wp-security-and-firewall'); ?></th>
+							<th class="column-primary"><?php _e('Name', 'all-in-one-wp-security-and-firewall'); ?></th>
 							<th><?php _e('File/Folder', 'all-in-one-wp-security-and-firewall'); ?></th>
 							<th><?php _e('Current permissions', 'all-in-one-wp-security-and-firewall'); ?></th>
 							<th><?php _e('Recommended permissions', 'all-in-one-wp-security-and-firewall'); ?></th>
@@ -45,7 +45,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<th><?php _e('Name', 'all-in-one-wp-security-and-firewall'); ?></th>
+							<th class="column-primary"><?php _e('Name', 'all-in-one-wp-security-and-firewall'); ?></th>
 							<th><?php _e('File/Folder', 'all-in-one-wp-security-and-firewall'); ?></th>
 							<th><?php _e('Current permissions', 'all-in-one-wp-security-and-firewall'); ?></th>
 							<th><?php _e('Recommended permissions', 'all-in-one-wp-security-and-firewall'); ?></th>

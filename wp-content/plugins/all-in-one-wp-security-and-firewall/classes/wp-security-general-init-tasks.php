@@ -140,6 +140,10 @@ class AIOWPSecurity_General_Init_Tasks {
 		if ($aio_wp_security->configs->get_value('aiowps_enable_login_captcha') == '1') {
 			if (!is_user_logged_in()) {
 				add_action('login_form', array($aio_wp_security->captcha_obj, 'insert_captcha_question_form'));
+				if (AIOWPSecurity_Utility::is_memberpress_plugin_active()) {
+					add_action('mepr-login-form-before-submit', array($aio_wp_security->captcha_obj, 'add_captcha_script'));
+					add_action('mepr-login-form-before-submit', array($aio_wp_security->captcha_obj, 'insert_captcha_question_form')); // for memberpress login form
+				}
 			}
 		}
 
