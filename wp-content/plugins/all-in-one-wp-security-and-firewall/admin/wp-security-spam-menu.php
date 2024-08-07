@@ -197,7 +197,7 @@ class AIOWPSecurity_Spam_Menu extends AIOWPSecurity_Admin_Menu {
 						++$todays_blocked_count;
 					}
 				}
-				$block_comments_output .= '<p><strong>'.__('Spammer IPs added to permanent block list today: ', 'all-in-one-wp-security-and-firewall').$todays_blocked_count.'</strong></p>'.'<hr><p><strong>'.__('All time total: ', 'all-in-one-wp-security-and-firewall').$total_count.'</strong></p>'.'<p><a class="button" href="admin.php?page='.AIOWPSEC_MAIN_MENU_SLUG.'&tab=permanent-block" target="_blank">'.__('View blocked IPs', 'all-in-one-wp-security-and-firewall').'</a></p></div>';
+				$block_comments_output .= '<p><strong>'.__('Spammer IPs added to permanent block list today:', 'all-in-one-wp-security-and-firewall'). ' ' . $todays_blocked_count.'</strong></p>'.'<hr><p><strong>'.__('All time total:', 'all-in-one-wp-security-and-firewall'). ' ' .$total_count.'</strong></p>'.'<p><a class="button" href="admin.php?page='.AIOWPSEC_MAIN_MENU_SLUG.'&tab=permanent-block" target="_blank">'.__('View blocked IPs', 'all-in-one-wp-security-and-firewall').'</a></p></div>';
 			}
 		}
 

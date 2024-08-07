@@ -307,7 +307,7 @@ class AIOWPSecurity_Utility {
 
 		//Make a backup of the config file
 		if (!AIOWPSecurity_Utility_File::backup_and_rename_wp_config($config_file)) {
-			AIOWPSecurity_Admin_Menu::show_msg_error_st(__('Failed to make a backup of the wp-config.php file.', 'all-in-one-wp-security-and-firewall') . ' ' . __(' This operation will not go ahead.', 'all-in-one-wp-security-and-firewall'));
+			AIOWPSecurity_Admin_Menu::show_msg_error_st(__('Failed to make a backup of the wp-config.php file.', 'all-in-one-wp-security-and-firewall') . ' ' . __('This operation will not go ahead.', 'all-in-one-wp-security-and-firewall'));
 			//$aio_wp_security->debug_logger->log_debug("Disable PHP File Edit - Failed to make a backup of the wp-config.php file.",4);
 			return false;
 		} else {
@@ -1123,6 +1123,15 @@ class AIOWPSecurity_Utility {
 	 */
 	public static function is_contact_form_7_plugin_active() {
 		return is_plugin_active('contact-form-7/wp-contact-form-7.php');
+	}
+
+	/**
+	 * Checks if the Memberpress plugin is active.
+	 *
+	 * @return Boolean - True if the Memberpress plugin is active, otherwise false.
+	 */
+	public static function is_memberpress_plugin_active() {
+		return is_plugin_active('memberpress/memberpress.php');
 	}
 	 
 	/**

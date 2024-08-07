@@ -520,28 +520,60 @@ class AIOWPSecurity_Feature_Item_Manager {
 	}
 
 	/**
+	 * Call the callback function associated with the feature item.
+	 *
+	 * @param mixed $feature_item The feature item object.
+	 */
+	private function call_feature_callback($feature_item) {
+		call_user_func($feature_item->callback, $feature_item);
+	}
+
+	/**
 	 * This function will output the feature details badge HTML
 	 *
-	 * @param string $feature_id - the id of the feature we want to get the badge for
+	 * @param string $feature_id             - the id of the feature we want to get the badge for
+	 * @param bool   $return_instead_of_echo - whether to return the HTML or echo it
 	 *
-	 * @return void
+	 * @return string|void
 	 */
-	public function output_feature_details_badge($feature_id) {
+	public function output_feature_details_badge($feature_id, $return_instead_of_echo = false) {
+		// Retrieve the feature item by ID
 		$feature_item = $this->get_feature_item_by_id($feature_id);
+
 		if (!$feature_item) return;
+
+		$this->call_feature_callback($feature_item);
+
+		// Prepare HTML for the feature badge
 		$max_security_points = $feature_item->item_points;
 		$current_security_points = $feature_item->is_active() ? $max_security_points : 0;
 		$security_level = $feature_item->get_security_level_string();
 		$protection_level = (0 == $current_security_points) ? 'none' : 'full';
 		$status_icon = (0 == $current_security_points) ? 'dashicons-unlock' : 'dashicons-lock';
-		?>
-		<div class="aiowps_feature_details_badge">
-			<span class="aiowps_feature_details_badge_difficulty aiowps_feature_protection_<?php echo $protection_level; ?>" title="<?php _e('Feature difficulty', 'all-in-one-wp-security-and-firewall'); ?>"><span class="dashicons <?php echo $status_icon; ?>"></span><?php echo $security_level; ?></span>
-			<span class="aiowps_feature_details_badge_points" title="<?php _e('Security points', 'all-in-one-wp-security-and-firewall'); ?>"><?php echo $current_security_points .'/'. $max_security_points; ?></span>
-		</div>
-		<?php
+	
+		$badge_html = '<div class="aiowps_feature_details_badge">';
+		$badge_html .= '<span class="aiowps_feature_details_badge_difficulty aiowps_feature_protection_'.$protection_level.'" title="'.__('Feature difficulty', 'all-in-one-wp-security-and-firewall').'">';
+		$badge_html .= '<span class="dashicons '.$status_icon.'"></span>'.$security_level.'</span>';
+		$badge_html .= '<span class="aiowps_feature_details_badge_points" title="'.__('Security points', 'all-in-one-wp-security-and-firewall').'">';
+		$badge_html .= $current_security_points.'/'.$max_security_points.'</span>';
+		$badge_html .= '</div>';
+	
+		if ($return_instead_of_echo) {
+			return $badge_html;
+		} else {
+			echo $badge_html;
+		}
 	}
 
+	/**
+	 * This function will calculate the total points for the AJAX save function
+	 *
+	 * @return void
+	 */
+	public function calculate_total_feature_points() {
+		$this->calculate_total_points();
+	}
+	
 	/**
 	 * This function will setup the feature status and calculate the total points
 	 *

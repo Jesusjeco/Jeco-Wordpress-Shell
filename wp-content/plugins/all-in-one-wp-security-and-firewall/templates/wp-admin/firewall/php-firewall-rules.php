@@ -1,8 +1,7 @@
 <?php if (!defined('ABSPATH')) die('Access denied.'); ?>
 <h2><?php _e('PHP firewall settings', 'all-in-one-wp-security-and-firewall'); ?></h2>
-<form action="" method="POST">
+<form action="" id="aios-php-firewall-settings-form">
 	<?php
-	wp_nonce_field('aiowpsec-php-firewall-nonce');
 
 	$aio_wp_security->include_template('wp-admin/firewall/partials/xmlrpc-warning-notice.php');
 

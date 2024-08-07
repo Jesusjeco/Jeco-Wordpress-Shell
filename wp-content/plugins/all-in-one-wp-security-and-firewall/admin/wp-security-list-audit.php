@@ -65,15 +65,11 @@ class AIOWPSecurity_List_Audit_Log extends AIOWPSecurity_List_Table {
 	/**
 	 * Returns ip column html to be rendered.
 	 *
-	 * @global AIO_WP_Security $aio_wp_security
-	 *
 	 * @param array $item Data for the columns on the current row.
 	 *
 	 * @return string The html to be rendered.
 	 */
 	public function column_ip($item) {
-		global $aio_wp_security;
-
 		$ip = $item['ip'];
 
 		$unblacklist_ip_warning_translation = __('Are you sure you want to unblacklist this IP address?', 'all-in-one-wp-security-and-firewall');
@@ -82,7 +78,7 @@ class AIOWPSecurity_List_Audit_Log extends AIOWPSecurity_List_Table {
 		$blacklist_ip_warning_translation = __('Are you sure you want to blacklist this IP address?', 'all-in-one-wp-security-and-firewall');
 
 		// Build row actions.
-		if (false !== strpos($aio_wp_security->configs->get_value('aiowps_banned_ip_addresses'), $ip)) {
+		if (AIOWPSecurity_Utility_Permissions::is_main_site_and_super_admin() && AIOWPSecurity_Utility::check_blacklist_ip($ip)) {
 			$actions = array(
 				'unblacklist' => '<a class="aios-unblacklist-ip-button" data-ip="' . esc_attr($ip) . '" data-message="' . esc_js($unblacklist_ip_warning_translation) . '" href="">' . esc_html__('Unblacklist', 'all-in-one-wp-security-and-firewall') . '</a>',
 			);
@@ -93,8 +89,11 @@ class AIOWPSecurity_List_Audit_Log extends AIOWPSecurity_List_Table {
 		} else {
 			$actions = array(
 				'lock_ip' => '<a class="aios-lock-ip-button" data-ip="' . esc_attr($ip) . '" data-message="' . esc_js($lock_ip_warning_translation) . '" href="">' . esc_html__('Lock IP', 'all-in-one-wp-security-and-firewall') . '</a>',
-				'blacklist_ip' => '<a class="aios-blacklist-ip-button" data-ip="' . esc_attr($ip) . '" data-message="' . esc_js($blacklist_ip_warning_translation) . '" href="">' . esc_html__('Blacklist IP', 'all-in-one-wp-security-and-firewall') . '</a>',
 			);
+
+			if (AIOWPSecurity_Utility_Permissions::is_main_site_and_super_admin()) {
+				$actions['blacklist_ip'] = '<a class="aios-blacklist-ip-button" data-ip="' . esc_attr($ip) . '" data-message="' . esc_js($blacklist_ip_warning_translation) . '" href="">' . esc_html__('Blacklist IP', 'all-in-one-wp-security-and-firewall') . '</a>';
+			}
 		}
 
 		return $ip . '<span style="color:silver"></span>' . $this->row_actions($actions);
@@ -166,7 +165,6 @@ class AIOWPSecurity_List_Audit_Log extends AIOWPSecurity_List_Table {
 	public function get_columns() {
 		$columns = array(
 			'cb' => '<input type="checkbox">', //Render a checkbox
-			'id' => 'ID',
 			'created' => __('Date and time', 'all-in-one-wp-security-and-firewall'),
 			'level' => __('Level', 'all-in-one-wp-security-and-firewall'),
 			'network_id' => __('Network ID', 'all-in-one-wp-security-and-firewall'),
@@ -301,13 +299,14 @@ class AIOWPSecurity_List_Audit_Log extends AIOWPSecurity_List_Table {
 	 */
 	public function delete_audit_event_records($entries, $delete_all = false) {
 		global $wpdb, $aio_wp_security;
-		
+
 		$audit_log_tbl = AIOWPSEC_TBL_AUDIT_LOG;
 		$result = false;
-		
+
 		if ($delete_all) {
 			// Delete all records
-			$delete_command = "DELETE FROM " . $audit_log_tbl;
+			$site_id_where_sql = (!is_super_admin()) ? ' WHERE site_id = ' . get_current_blog_id() : '';
+			$delete_command = "DELETE FROM " . $audit_log_tbl . $site_id_where_sql;
 			$result = $wpdb->query($delete_command);
 		} elseif (is_array($entries)) {
 			// Delete multiple records
@@ -315,10 +314,12 @@ class AIOWPSecurity_List_Audit_Log extends AIOWPSecurity_List_Table {
 			$entries = array_filter($entries, 'is_numeric'); // Discard non-numeric ID values
 			$chunks = array_chunk($entries, 1000);
 
+			$site_id_where_sql = (!is_super_admin()) ? ' AND site_id = ' . get_current_blog_id() : '';
+
 			// Processing each chunk
 			foreach ($chunks as $chunk) {
 				$id_list = "(" . implode(",", $chunk) . ")"; // Create comma separate list for DB operation
-				$delete_command = "DELETE FROM " . $audit_log_tbl . " WHERE id IN " . $id_list;
+				$delete_command = "DELETE FROM " . $audit_log_tbl . " WHERE id IN " . $id_list . $site_id_where_sql;
 				$result = $wpdb->query($delete_command);
 				if (!$result) {
 					$aio_wp_security->debug_logger->log_debug('Database error occurred when deleting rows from Audit log table. Database error: '.$wpdb->last_error, 4);
@@ -328,7 +329,8 @@ class AIOWPSecurity_List_Audit_Log extends AIOWPSecurity_List_Table {
 			}
 		} elseif (!empty($entries)) {
 			// Delete single record
-			$delete_command = "DELETE FROM " . $audit_log_tbl . " WHERE id = '" . absint($entries) . "'";
+			$site_id_where_sql = (!is_super_admin()) ? ' AND site_id = ' . get_current_blog_id() : '';
+			$delete_command = "DELETE FROM " . $audit_log_tbl . " WHERE id = '" . absint($entries) . "'" . $site_id_where_sql;
 			$result = $wpdb->query($delete_command);
 		}
 

@@ -5,7 +5,7 @@ Tags: security, malware scanning, two factor authentication, firewall, login sec
 Requires PHP: 5.6
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 5.3.1
+Stable tag: 5.3.2
 License: GPLv3 or later
 
 Protect your website investment with All-In-One Security (AIOS) – a comprehensive and easy to use security plugin designed especially for WordPress. Featuring login security tools, a cutting-edge firewall and much more.
@@ -212,6 +212,21 @@ Go to the settings menu after you activate the plugin and follow the instruction
 
 == Changelog ==
 
+= 5.3.2 - 06/Aug/2024 =
+
+* FIX: Bug that allowed subsite admins to delete audit logs of other subsites
+* FIX: Disabled blacklisting on subsites because the PHP-based firewall currently applies to the entire multisite
+* FIX: An issue with getting the google bot ip ranges
+* TWEAK: Added extra protections in place before modifying the .htaccess file
+* TWEAK: Actions in the tools, firewall and scanner menu are now processed via AJAX
+* TWEAK: Trimmed leading and trailing whitespace from inputs in the WHOIS lookup tab
+* TWEAK: Added a confirmation pop-up when users clear records in the Debug Logs table
+* TWEAK: Added captcha support for the MemberPress plugin
+* TWEAK: Improved the UX of the WP REST API options
+* TWEAK: Internal code improvements to improve maintainability
+* TWEAK: Updated the feature manager to improve performance
+* TWEAK: Fixed the issue of blank tables on mobile view
+ 
 = 5.3.1 - 26/Jun/2024 =
 
 * FEATURE: Added CAPTCHA to password protected pages/posts
@@ -1449,4 +1464,4 @@ those who want to enable the basic firewall but do not have "AllowOverride" opti
 - First commit to the WP repository.
 
 == Upgrade Notice ==
-* 5.3.1: Added CAPTCHA to password protected pages/posts, fixed multiple WooCommerce issues. Various tweaks, fixes and improvements. See changelog for full details. A recommended update for all.
+* 5.3.2: Added captcha support for the MemberPress plugin, fixes for multisites and various tweaks. See changelog for full details. A recommended update for all.

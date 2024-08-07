@@ -47,7 +47,7 @@ if (!is_super_admin()) {
 				echo '<div id="aios_message" class="aio_green_box"><p><strong>';
 				_e('No action required.', 'all-in-one-wp-security-and-firewall');
 				echo '</strong><br />';
-				_e('Your site does not have any account which uses the "admin" username. ', 'all-in-one-wp-security-and-firewall');
+				_e('Your site does not have any account which uses the "admin" username.', 'all-in-one-wp-security-and-firewall');
 				_e('This is good security practice.', 'all-in-one-wp-security-and-firewall');
 				echo '</p></div>';
 			}

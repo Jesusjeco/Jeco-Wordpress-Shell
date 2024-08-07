@@ -406,7 +406,7 @@ class AIOWPSecurity_Configure_Settings {
 		}
 
 		if (is_main_site()) {
-			AIOWPSecurity_Utility_Htaccess::write_to_htaccess();
+			AIOWPSecurity_Utility_Htaccess::write_to_htaccess(false);
 		}
 
 		AIOWPSecurity_Comment::generate_antibot_keys(true);
