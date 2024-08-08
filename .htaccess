@@ -1,11 +1,11 @@
 ## BLACKLIST IP AUTO ADDED ##
 
-# on Thu, 08 Aug 2024 01:30:49 +0000 Last 10days Blacklist IPs
+# on Thu, 08 Aug 2024 02:30:52 +0000 Last 10days Blacklist IPs
 ###############################################################################
 # LIVE BLACKLIST IPv4/IPv6 ADDRESSES DATABASE
 # URL: https://myip.ms/browse/blacklist
 #
-#  Myip.ms Blacklist IPs in this List: 903 ip (29 July 2024 - 08 August 2024)
+#  Myip.ms Blacklist IPs in this List: 907 ip (29 July 2024 - 08 August 2024)
 #
 
 deny from 103.231.46.118
@@ -332,7 +332,6 @@ deny from 114.119.143.187
 deny from 97.184.8.205
 deny from 216.131.81.247
 deny from 167.71.202.234
-deny from 24.199.84.240
 deny from 191.101.61.243
 deny from 178.128.98.217
 deny from 2.41.145.38
@@ -421,8 +420,6 @@ deny from 188.209.49.99
 deny from 216.244.66.203
 deny from 195.154.122.170
 deny from 217.113.194.97
-deny from 52.160.45.52
-deny from 136.243.228.181
 deny from 185.191.171.11
 deny from 189.240.60.168
 deny from 85.208.96.202
@@ -849,6 +846,13 @@ deny from 85.208.98.24
 deny from 178.48.68.61
 deny from 46.59.68.211
 deny from 109.238.247.83
+deny from 103.112.65.25
+deny from 52.221.250.131
+deny from 130.84.14.25
+deny from 136.243.228.181
+deny from 52.160.45.52
+deny from 182.69.180.142
+deny from 24.199.84.240
 deny from 2604:2dc0:101:100::dae
 deny from 2604:2dc0:101:100::8e0
 deny from 2604:2dc0:101:100::2b4
