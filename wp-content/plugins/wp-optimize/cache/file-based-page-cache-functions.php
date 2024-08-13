@@ -1131,6 +1131,12 @@ function wpo_delete_files($src, $recursive = true) {
 		if (!@unlink($src) && file_exists($src)) { // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged -- suppress PHP warning in case of failure
 			return false;
 		}
+
+		// Remove gzipped version of the file
+		if (file_exists("$src.gz")) {
+			unlink("$src.gz");
+		}
+
 		return true;
 	}
 

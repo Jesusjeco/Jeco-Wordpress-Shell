@@ -1388,6 +1388,7 @@ h4.updraft_advert_heading {
   outline: none;
 }
 
+.wpo-analytics__premium-mask,
 .wpo-unused-images__premium-mask,
 .wpo-unused-image-sizes__premium-mask {
   position: absolute;
@@ -1405,10 +1406,12 @@ h4.updraft_advert_heading {
       justify-content: center;
 }
 
+.wpo-analytics__premium-mask,
 .wpo-unused-image-sizes__premium-mask {
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.85));
 }
 
+a.wpo-analytics__premium-link,
 a.wpo-unused-images__premium-link {
   background: #FFF;
   display: inline-block;

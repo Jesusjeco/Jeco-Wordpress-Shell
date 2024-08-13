@@ -1209,6 +1209,21 @@ class WP_Optimize_Minify_Functions {
 	}
 
 	/**
+	 * Get the file modification time
+	 *
+	 * @param string $asset_src
+	 * @return string
+	 */
+	public static function get_modification_time($asset_src) {
+		$hurl = self::get_hurl($asset_src);
+		$abs_file_path = WP_Optimize_Utils::get_file_path($hurl);
+		if (empty($abs_file_path)) return '';
+
+		$modification_time = @filemtime($abs_file_path); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged -- Suppress E-Warning on failure
+		return strval($modification_time);
+	}
+
+	/**
 	 * When BOM removed code is null (due to unrecognised character encoding), logs error message
 	 *
 	 * @param string        $url      URL of the script/stylesheet

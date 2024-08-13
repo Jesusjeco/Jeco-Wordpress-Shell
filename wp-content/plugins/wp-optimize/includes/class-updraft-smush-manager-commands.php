@@ -262,7 +262,8 @@ class Updraft_Smush_Manager_Commands extends Updraft_Task_Manager_Commands_1_0 {
 			//Run checks if we are enabling webp conversion
 			if (!WP_Optimize_WebP::is_shell_functions_available()) {
 				$webp_instance->disable_webp_conversion();
-				return new WP_Error('update_failed_no_shell_functions', __('Required WebP shell functions are not available on server.', 'wp-optimize'));
+				$webp_instance->log("Required WebP shell functions are not available on the server, disabling WebP conversion");
+				return new WP_Error('update_failed_no_shell_functions', __('Required WebP shell functions are not available on the server.', 'wp-optimize'));
 			}
 
 			// Run conversion test if not already done and set necessary option value
@@ -271,7 +272,8 @@ class Updraft_Smush_Manager_Commands extends Updraft_Task_Manager_Commands_1_0 {
 
 				if (!$webp_instance->is_webp_conversion_successful()) {
 					$webp_instance->disable_webp_conversion();
-					return new WP_Error('update_failed_no_working_webp_converter', __('No working Webp converter was found on server.', 'wp-optimize'));
+					$webp_instance->log("No working WebP converter was found on the server when updating WebP options, disabling WebP conversion");
+					return new WP_Error('update_failed_no_working_webp_converter', __('No working WebP converter was found on the server.', 'wp-optimize'));
 				}
 
 				$options['webp_conversion_test'] = true;
@@ -293,7 +295,8 @@ class Updraft_Smush_Manager_Commands extends Updraft_Task_Manager_Commands_1_0 {
 
 		if (!$success) {
 			$webp_instance->disable_webp_conversion();
-			return new WP_Error('update_failed', __('Webp options could not be updated.', 'wp-optimize'));
+			$webp_instance->log("WebP options could not be updated");
+			return new WP_Error('update_failed', __('WebP options could not be updated.', 'wp-optimize'));
 		}
 
 		// Setup daily CRON only when enabling WebP and Delete daily CRON when disabling WebP
@@ -309,7 +312,7 @@ class Updraft_Smush_Manager_Commands extends Updraft_Task_Manager_Commands_1_0 {
 		$response = array();
 		$response['status'] = true;
 		$response['saved'] = $success;
-		$response['summary'] = __('Webp options updated successfully.', 'wp-optimize');
+		$response['summary'] = __('WebP options updated successfully.', 'wp-optimize');
 
 		return $response;
 	}
@@ -597,9 +600,11 @@ class Updraft_Smush_Manager_Commands extends Updraft_Task_Manager_Commands_1_0 {
 		//Run checks before calling reset_webp_serving_method
 		if (!WP_Optimize_WebP::is_shell_functions_available()) {
 			$webp_instance->disable_webp_conversion();
-			return new WP_Error('reset_failed_no_shell_functions', __('Required WebP shell functions are not available on server', 'wp-optimize'));
+			$webp_instance->log("The WebP serving method cannot be reset because required WebP shell functions are not available on the server");
+			return new WP_Error('reset_failed_no_shell_functions', __('The WebP serving method cannot be reset because required WebP shell functions are not available on the server', 'wp-optimize'));
 		} elseif (!$webp_instance->is_webp_conversion_enabled()) {
 			$webp_instance->disable_webp_conversion();
+			$webp_instance->log("The WebP serving method cannot be reset because WebP conversion is currently disabled");
 			return new WP_Error('reset_failed_webp_conversion_disabled', __('The WebP serving method cannot be reset because WebP conversion is currently disabled', 'wp-optimize'));
 		}
 
