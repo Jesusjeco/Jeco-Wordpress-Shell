@@ -63,6 +63,16 @@
 		<span id="wpo_current_cache_size_information"><?php esc_html_e('Current cache size:', 'wp-optimize'); ?> <?php echo esc_html(WP_Optimize()->format_size($cache_size['size'])); ?></span>
 		<br><span id="wpo_current_cache_file_count"><?php esc_html_e('Number of files:', 'wp-optimize'); ?> <?php echo esc_html($cache_size['file_count']); ?></span>
 	</p>
+	<?php
+
+	/*
+	Auto preload feature is commented out due to possible regression in v3.5.0
+	<p>
+		<input type="checkbox" id="wpo-auto-preload-after-purge" <?php checked($auto_preload_after_purge); ?>>
+		<label for="wpo-auto-preload-after-purge"><?php esc_html_e('Automatically preload content after it is purged', 'wp-optimize'); ?></label>
+	</p>
+	*/
+	?>
 </div>
 
 <h3><?php esc_html_e('Cache settings', 'wp-optimize'); ?></h3>

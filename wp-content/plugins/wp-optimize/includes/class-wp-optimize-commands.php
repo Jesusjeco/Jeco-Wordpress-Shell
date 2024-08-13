@@ -561,7 +561,7 @@ class WP_Optimize_Commands {
 		$admin_settings .= WP_Optimize()->include_template('database/settings-general.php', true, array('optimize_db' => false));
 		$admin_settings .= WP_Optimize()->include_template('database/settings-auto-cleanup.php', true, array('optimize_db' => false, 'show_innodb_option' => WP_Optimize()->template_should_include_data() && $this->optimizer->show_innodb_force_optimize()));
 		$admin_settings .= WP_Optimize()->include_template('settings/settings-logging.php', true, array('optimize_db' => false));
-		$admin_settings .= '<input id="wp-optimize-settings-save" class="button button-primary" type="submit" name="wp-optimize-settings" value="' . esc_attr('Save settings', 'wp-optimize') .'" />';
+		$admin_settings .= '<input id="wp-optimize-settings-save" class="button button-primary" type="submit" name="wp-optimize-settings" value="' . esc_attr(__('Save settings', 'wp-optimize')) .'" />';
 		$admin_settings .= '</form>';
 		$admin_settings .= WP_Optimize()->include_template('settings/settings-trackback-and-comments.php', true, array('optimize_db' => false));
 		$content = $admin_settings;
