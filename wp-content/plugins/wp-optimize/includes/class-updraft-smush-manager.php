@@ -750,6 +750,8 @@ class Updraft_Smush_Manager extends Updraft_Task_Manager_1_4 {
 	 * @return array - translations used in JS
 	 */
 	public function smush_js_translations() {
+		$resmushit_article_link = WP_Optimize()->wp_optimize_url('https://resmush.it/api/', __('resmushIt', 'wp-optimize'), '', '', true);
+
 		return apply_filters('updraft_smush_js_translations', array(
 			'all_images_compressed' 		  => __('No uncompressed images were found.', 'wp-optimize'),
 			'error_unexpected_response' 	  => __('An unexpected response was received from the server.', 'wp-optimize') . ' ' . __('More information has been logged in the browser console.', 'wp-optimize'),
@@ -757,7 +759,10 @@ class Updraft_Smush_Manager extends Updraft_Task_Manager_1_4 {
 			'error_try_again_later'			  => __('Please try again later.', 'wp-optimize'),
 			'server_check'					  => __('Connecting to the Smush API server, please wait', 'wp-optimize'),
 			'please_wait'					  => __('Please wait while the request is being processed', 'wp-optimize'),
-			'server_error'					  => __('There was an error connecting to the image compression server.', 'wp-optimize') . ' ' . __('This could mean either the server is temporarily unavailable or there are connectivity issues with your internet connection.', 'wp-optimize') . ' ' . __('Please try later.', 'wp-optimize'),
+			'server_error'					  => __('There was an error connecting to the image compression server.', 'wp-optimize') .
+				'<br>' . __('This could mean either the server is temporarily unavailable or there are connectivity issues with your internet connection.', 'wp-optimize') . ' ' .
+					'<i>' . sprintf(__('(Also ensure IPs listed at the bottom of this %s page are whitelisted by your webserver).', 'wp-optimize'), $resmushit_article_link) . '</i>' .
+				'<br>' . __('Please try later.', 'wp-optimize'),
 			'please_select_images'		  	  => __('Please select the images you want compressed from the "Uncompressed images" panel first', 'wp-optimize'),
 			'please_updating_images_info'	  => __('Please wait: updating information about the selected image.', 'wp-optimize'),
 			'please_select_compressed_images' => __('Please select the images you want to mark as already compressed from the "Uncompressed images" panel first', 'wp-optimize'),
@@ -1112,7 +1117,7 @@ class Updraft_Smush_Manager extends Updraft_Task_Manager_1_4 {
 		$enqueue_version = WP_Optimize()->get_enqueue_version();
 		$min_or_not = WP_Optimize()->get_min_or_not_string();
 		$min_or_not_internal = WP_Optimize()->get_min_or_not_internal_string();
-		
+
 		$js_variables = $this->smush_js_translations();
 		$js_variables['ajaxurl'] = admin_url('admin-ajax.php');
 		$js_variables['features'] = $this->get_features();
@@ -1217,19 +1222,11 @@ class Updraft_Smush_Manager extends Updraft_Task_Manager_1_4 {
 
 	/**
 	 * Delete all smush log files
+	 *
+	 * @deprecated 3.5.0
 	 */
 	public function delete_log_files() {
-		if (!function_exists('glob')) return;
-		$upload_dir = wp_get_upload_dir();
-		$upload_base = $upload_dir['basedir'];
-		$files = glob($upload_base . '/smush-*.log');
-		if (false === $files) return;
-		foreach ($files as $file) {
-			if (is_file($file)) {
-				@unlink($file); // phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged -- suppress error due to file permission issues
-			}
-		}
-
+		_deprecated_function(__METHOD__, '3.5.0');
 	}
 
 	/**

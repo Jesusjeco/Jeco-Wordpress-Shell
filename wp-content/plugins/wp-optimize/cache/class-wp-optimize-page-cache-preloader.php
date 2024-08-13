@@ -15,6 +15,13 @@ class WP_Optimize_Page_Cache_Preloader extends WP_Optimize_Preloader {
 	static protected $_instance = null;
 
 	/**
+	 * List of URLs for which a task will be created to preload them into cache
+	 *
+	 * @var array
+	 */
+	private $url_preload_list = array();
+
+	/**
 	 * WP_Optimize_Page_Cache_Preloader constructor.
 	 */
 	public function __construct() {
@@ -194,9 +201,6 @@ class WP_Optimize_Page_Cache_Preloader extends WP_Optimize_Preloader {
 				$description = 'Preload - '.$url;
 				$options = array('url' => $url, 'preload_type' => $type, 'anonymous_user_allowed' => (defined('DOING_CRON') && DOING_CRON) || (defined('WP_CLI') && WP_CLI));
 
-				if (!class_exists('WP_Optimize_Load_Url_Task')) {
-					require_once WPO_PLUGIN_MAIN_PATH . 'cache/class-wpo-load-url-task.php';
-				}
 				WP_Optimize_Load_Url_Task::create_task($this->task_type, $description, $options, 'WP_Optimize_Load_Url_Task');
 			}
 
@@ -477,6 +481,32 @@ class WP_Optimize_Page_Cache_Preloader extends WP_Optimize_Preloader {
 		 * @param integer $blog_id The blog ID
 		 */
 		return apply_filters('wpo_get_mapped_domain', $domain, $blog_id);
+	}
+
+	/**
+	 * Actually add the URLs to be preloaded into cache during `shutdown` hook
+	 *
+	 * @return void
+	 */
+	public function create_tasks_for_auto_preload_urls() {
+		foreach ($this->url_preload_list as $url) {
+			$description = 'Preload - '.$url;
+			$options = array('url' => $url, 'preload_type' => $this->task_type, 'anonymous_user_allowed' => (defined('DOING_CRON') && DOING_CRON) || (defined('WP_CLI') && WP_CLI));
+
+			WP_Optimize_Load_Url_Task::create_task($this->task_type, $description, $options, 'WP_Optimize_Load_Url_Task');
+		}
+
+		$this->run('manual', null, true);
+	}
+
+	/**
+	 * Prepare the URL list that will need to be tasked to be preloaded
+	 *
+	 * @param string $url The URL to be preloaded
+	 * @return void
+	 */
+	public function add_url_to_preload_list($url) {
+		$this->url_preload_list[] = $url;
 	}
 
 	/**

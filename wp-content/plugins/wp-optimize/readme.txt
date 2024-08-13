@@ -5,7 +5,7 @@ Tags: cache, caching, image cache, minify, performance cache, page speed, image 
 Requires PHP: 5.6
 Requires at least: 4.5
 Tested up to: 6.6
-Stable tag: 3.4.2
+Stable tag: 3.5.0
 License: GPLv2+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -394,6 +394,19 @@ If none of the above works, disable processing of JavaScript files in the minify
 
 
 == Changelog ==
+
+= 3.5.0 - 14/Aug/2024 =
+
+* FEATURE: Premium - Host Google and minimal analytics scripts locally
+* FIX: Premium - Cache - Single page cache purge/preload feature isn't working 
+* TWEAK: Add logging for the WebP feature
+* TWEAK: Allow minification of script modules
+* TWEAK: Cache - Purge the cache when the site is migrated 
+* TWEAK: Improvements to asset minification cache logic
+* TWEAK: Improvements to reSmushIt curl error message
+* TWEAK: Minify - Added an option to disable Google Fonts processing when it causes conflicts with other plugins
+* TWEAK: Move all WPO files from the `uploads` folder to `uploads/wpo`
+* TWEAK: Style improvement of the loading modals
 
 = 3.4.2 - 03/Jul/2024 =
 
@@ -1557,4 +1570,4 @@ If none of the above works, disable processing of JavaScript files in the minify
 * Fix Interface
 
 == Upgrade Notice ==
-* 3.4.2: Fixed issue with unnecessary heartbeat calls for retrieving information about images - a recommended update for all
+* 3.5.0: One premium feature added. Ability to host analytics scripts locally, a lot of fixes and tweaks - a recommended update for all
