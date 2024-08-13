@@ -1,4 +1,5 @@
 <?php
+include "disable-plugin-updates.php";
 include "disable-emojis.php";
 include "enqueue-style.php";
 include "footer.php";
