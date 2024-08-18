@@ -1,7 +1,8 @@
-The objective of this repository is to provide a basic starting shell to start developing your wordpress installation.
+Developer oriented Wordpress starter theme.
+It offers you a folder structure, already connected with Gulp as a task manager and a basic file structure to jump directly into coding and adding the blocks required for any proyect.
 
-The repository comes with the suggested wordpress and they will be changing depending on the new tendencies in security and settings.
-
+It has a basic hello-world already added to be used as an starting point.
+It also includes a list of my suggested plugins.
 # Steps
 
 1- Once you cloned the repo, activate the plugins. It is recommended to activate one by one so you can apply the configuration individually.
