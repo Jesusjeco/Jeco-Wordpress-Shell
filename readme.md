@@ -7,8 +7,11 @@ It also includes a list of my suggested plugins.
 
 ## Steps
 1- Once you cloned the repo, activate the plugins. It is recommended to activate one by one so you can apply the configuration individually and according to your taste.
+
 2- Activate the theme Jeco-Wordpress-Shell
+
 3- In your code editor, go to the themes folder and then to the Jeco-Wordpress-Shell folder.
+
 4- Now that you have activated the theme, lets go with the environment
 
 ## Environment
@@ -35,7 +38,7 @@ npm install --save-dev gulp
 ```
 
 
-3- With gulp installed locally and globally, run once the command 'gulp' to be sure that it compiles all the files.
+3- With gulp installed locally and globally, run once the command `gulp` to be sure that it compiles all the files.
 ```
 gulp
 ```
