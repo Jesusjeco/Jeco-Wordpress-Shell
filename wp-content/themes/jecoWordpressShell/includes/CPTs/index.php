@@ -1,3 +1,3 @@
 <?php
 
-//include "foods.php";
+include "cpt-hello-world.php";

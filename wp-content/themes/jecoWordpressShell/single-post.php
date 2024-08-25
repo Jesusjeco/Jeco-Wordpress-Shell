@@ -1,10 +1,11 @@
 <?php get_header(); ?>
 
-<main id="main" role="main">
+<main class="single-post" id="main" role="main">
+    <h2>single-post.php</h2>
     <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
         <header class="entry-header">
             <?php
-            if ( has_post_thumbnail() ) {
+            if (has_post_thumbnail()) {
                 the_post_thumbnail('large', array('class' => 'post-thumbnail'));
             }
             ?>
@@ -40,7 +41,7 @@
         <footer class="entry-footer">
             <?php
             // Display post meta information or additional content
-            if ( is_singular() && get_the_author_meta('description') ) {
+            if (is_singular() && get_the_author_meta('description')) {
                 // Display author bio if available
                 echo '<div class="author-bio">' . get_the_author_meta('description') . '</div>';
             }
@@ -62,9 +63,9 @@
         if ($related_query->have_posts()) :
             echo '<ul>';
             while ($related_query->have_posts()) : $related_query->the_post();
-                ?>
+        ?>
                 <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
-                <?php
+        <?php
             endwhile;
             echo '</ul>';
             wp_reset_postdata();
@@ -75,7 +76,7 @@
     <section class="comments">
         <?php
         // Display comments if enabled
-        if ( comments_open() || get_comments_number() ) :
+        if (comments_open() || get_comments_number()) :
             comments_template();
         endif;
         ?>

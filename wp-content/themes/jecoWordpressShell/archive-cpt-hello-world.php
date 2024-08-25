@@ -1,9 +1,9 @@
 <?php get_header(); ?>
 
-<main class="home" id="main" role="main">
+<main class="cpt-hello-world" id="main" role="main">
     <header class="page-header">
-        <h1 class="page-title"><?php bloginfo('name'); ?> - Blog</h1>
-        <h2>home.php</h2>
+        <h1 class="page-title">Archive - cpt-hello-world</h1>
+        <h2>archive-cpt-hello-world.php</h2>
     </header>
 
     <div class="posts-wrapper">
