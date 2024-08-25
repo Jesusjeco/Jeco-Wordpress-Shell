@@ -1,6 +1,6 @@
 {
     "key": "group_66b3c88793d73",
-    "title": "Hello world",
+    "title": "Block Hello world",
     "fields": [
         {
             "key": "field_66b3c893b6cb6",
@@ -18,6 +18,10 @@
             },
             "layout": "block",
             "acfe_seamless_style": 1,
+            "acfe_group_modal": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large",
             "sub_fields": [
                 {
                     "key": "field_66b3c89cb6cb7",
@@ -39,11 +43,7 @@
                     "prepend": "",
                     "append": ""
                 }
-            ],
-            "acfe_group_modal": 0,
-            "acfe_group_modal_close": 0,
-            "acfe_group_modal_button": "",
-            "acfe_group_modal_size": "large"
+            ]
         }
     ],
     "location": [
@@ -64,7 +64,7 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfe_display_title": "",
+    "acfe_display_title": "Block Hello world",
     "acfe_autosync": [
         "php",
         "json"
@@ -72,5 +72,5 @@
     "acfe_form": 0,
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1723058350
+    "modified": 1724622435
 }

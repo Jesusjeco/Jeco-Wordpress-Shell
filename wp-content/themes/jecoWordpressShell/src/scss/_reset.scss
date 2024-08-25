@@ -1,11 +1,11 @@
-//Resetting CSS style
-//@import "../node_modules/reset-css/sass/reset";
+// Universal box-sizing
 *,
 *::before,
 *::after {
 	box-sizing: border-box;
 }
 
+// Remove default margins and padding for common elements
 body,
 h1,
 h2,
@@ -13,17 +13,148 @@ h3,
 h4,
 h5,
 h6,
-p {
+p,
+blockquote,
+pre,
+figure,
+ul,
+ol,
+dl {
 	margin: 0;
 	padding: 0;
+}
+
+// Ensure consistent body styles
+body {
+	line-height: 1.5;
+	font-family: inherit;
+	background-color: inherit;
+	color: inherit;
+}
+
+// Reset headings to inherit font styles and weight
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: inherit;
 	font-weight: inherit;
 }
 
-img {
+// Ensure lists have no default styles
+ul,
+ol {
+	list-style: none;
+}
+
+// Ensure links are consistent and remove default styles
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+// Ensure consistent button styles
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+	font-size: inherit;
+	margin: 0;
+	border: none;
+	background: none;
+	outline: none;
+	color: inherit;
+	padding: 0;
+	cursor: pointer;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+// Ensure images and media fit within their containers
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
 	max-width: 100%;
 	height: auto;
 }
 
-b {
-	font: revert;
+// Revert styles for bold text
+b,
+strong {
+	font-weight: bold;
+}
+
+// Remove default form element styles
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+// Remove default quote styles
+blockquote {
+	quotes: none;
+}
+
+// Remove default table styles
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+// Remove default fieldset and legend styles
+fieldset {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+legend {
+	margin: 0;
+	padding: 0;
+	font-size: inherit;
+	font-weight: inherit;
+}
+
+// Remove default figure styles
+figure {
+	margin: 0;
+}
+
+// Reset all HTML5 block elements
+main,
+section,
+article,
+aside,
+header, 
+footer,
+nav,
+figure,
+figcaption {
+	display: block;
+}
+
+// Remove default text area resize
+textarea {
+	resize: none;
+}
+
+// Reset default horizontal rule styles
+hr {
+	border: none;
+	border-top: 1px solid #ccc;
+	margin: 0;
+}
+
+// Reset HTML5 hidden attribute
+[hidden] {
+	display: none;
 }

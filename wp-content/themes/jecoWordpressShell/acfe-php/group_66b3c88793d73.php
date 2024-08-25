@@ -4,7 +4,7 @@ if( function_exists('acf_add_local_field_group') ):
 
 acf_add_local_field_group(array(
 	'key' => 'group_66b3c88793d73',
-	'title' => 'Hello world',
+	'title' => 'Block Hello world',
 	'fields' => array(
 		array(
 			'key' => 'field_66b3c893b6cb6',
@@ -22,6 +22,10 @@ acf_add_local_field_group(array(
 			),
 			'layout' => 'block',
 			'acfe_seamless_style' => 1,
+			'acfe_group_modal' => 0,
+			'acfe_group_modal_close' => 0,
+			'acfe_group_modal_button' => '',
+			'acfe_group_modal_size' => 'large',
 			'sub_fields' => array(
 				array(
 					'key' => 'field_66b3c89cb6cb7',
@@ -44,10 +48,6 @@ acf_add_local_field_group(array(
 					'append' => '',
 				),
 			),
-			'acfe_group_modal' => 0,
-			'acfe_group_modal_close' => 0,
-			'acfe_group_modal_button' => '',
-			'acfe_group_modal_size' => 'large',
 		),
 	),
 	'location' => array(
@@ -68,7 +68,7 @@ acf_add_local_field_group(array(
 	'active' => true,
 	'description' => '',
 	'show_in_rest' => 0,
-	'acfe_display_title' => '',
+	'acfe_display_title' => 'Block Hello world',
 	'acfe_autosync' => array(
 		0 => 'php',
 		1 => 'json',
@@ -76,7 +76,7 @@ acf_add_local_field_group(array(
 	'acfe_form' => 0,
 	'acfe_meta' => '',
 	'acfe_note' => '',
-	'modified' => 1723058350,
+	'modified' => 1724622435,
 ));
 
 endif;
