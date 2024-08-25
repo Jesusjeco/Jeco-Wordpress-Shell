@@ -7,19 +7,36 @@
     <title>
         <?php is_front_page() ? the_title() : wp_title(''); ?>
     </title>
-    <?php wp_head() ?>
-
-    <link rel="stylesheet" href="<?= STYLES_PATH . "default.css" ?>">
+    <?php wp_head(); ?>
 </head>
 
 <body>
     <?php
     $header_data = get_field('header_data', 'option');
     ?>
+    <p>Header</p>
     <header>
-        <h1>Header</h1>
-        <?php
-         get_home_url();
-         clean_custom_menus();
-        ?>
+        <?php clean_custom_menus(); ?>
     </header>
+
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumb">
+        <!-- Fallback content if breadcrumbs are not available -->
+        <div class="breadcrumb-trail">
+            <?php
+            if (!is_front_page()) {
+                echo '<a href="' . home_url() . '">Home</a> / ';
+                if (is_category() || is_single()) {
+                    the_category(' / ');
+                    if (is_single()) {
+                        echo " / ";
+                        the_title();
+                    }
+                } elseif (is_page()) {
+                    echo the_title();
+                }
+            }
+            ?>
+        </div>
+    </nav>
+    <!-- End Breadcrumbs -->

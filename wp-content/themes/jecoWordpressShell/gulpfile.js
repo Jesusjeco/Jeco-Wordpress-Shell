@@ -7,14 +7,14 @@ const concat = require("gulp-concat");
 const babel = require("gulp-babel");
 var uglify = require("gulp-uglify");
 
-function compileDefaultSCSS(cb) {
+function compilePagesSCSS(cb) {
 	cb();
-	return src("src/scss/default.scss")
+	return src("src/scss/*.scss")
 		.pipe(sass().on("error", sass.logError))
 		.pipe(autoprefixer())
 		.pipe(cleanCSS())
 		.pipe(dest("dist/css/"));
-} //compileDefaultSCSS
+} //compilePagesSCSS
 
 function compileBlocksSCSS(cb) {
 	cb();
@@ -61,7 +61,7 @@ function compileJS(cb) {
 // } //runSwiperJs
 
 exports.default = series(
-	compileDefaultSCSS,
+	compilePagesSCSS,
 	compileBlocksSCSS,
 	compileJS,
 	// compileBootstrapJS,
@@ -69,6 +69,6 @@ exports.default = series(
 	// compileSwiperJs
 );
 exports.watcher = () => {
-	watch(["src/scss/*.scss"], compileDefaultSCSS);
+	watch(["src/scss/*.scss"], compilePagesSCSS);
 	watch("blocks/**/*.scss", compileBlocksSCSS);
 };

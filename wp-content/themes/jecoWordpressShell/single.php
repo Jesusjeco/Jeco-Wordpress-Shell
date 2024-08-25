@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 
-<main id="main" role="main">
+<main class="single" id="main" role="main">
+    <h2>single.php</h2>
     <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
         <header class="entry-header">
             <?php
