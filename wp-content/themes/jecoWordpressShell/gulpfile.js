@@ -14,7 +14,7 @@ function compilePagesSCSS(cb) {
 		.pipe(autoprefixer())
 		.pipe(cleanCSS())
 		.pipe(dest("dist/css/"));
-} //compileHomeSCSS
+} //compilePagesSCSS
 
 function compileBlocksSCSS(cb) {
 	cb();
