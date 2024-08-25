@@ -13,10 +13,15 @@
 <body>
     <?php
     $header_data = get_field('header_data', 'option');
+    $logo_url  = null;
+    if (isset($header_data))
+        $logo_url = $header_data['logo']['url'];
     ?>
     <p>Header</p>
-    <header>
-        <?php clean_custom_menus(); ?>
+    <header class="menu">
+        <?php
+        //Printing menu
+        echo clean_custom_menus($logo_url); ?>
     </header>
 
     <!-- Breadcrumbs -->
