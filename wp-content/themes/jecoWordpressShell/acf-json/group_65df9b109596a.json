@@ -1,6 +1,6 @@
 {
     "key": "group_65df9b109596a",
-    "title": "Option page – Header",
+    "title": "Option - Header",
     "fields": [
         {
             "key": "field_65df9b11332b7",
@@ -19,6 +19,9 @@
             "layout": "block",
             "acfe_seamless_style": 0,
             "acfe_group_modal": 0,
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large",
             "sub_fields": [
                 {
                     "key": "field_65df9b2e332b8",
@@ -47,10 +50,7 @@
                     "preview_size": "medium",
                     "library": "all"
                 }
-            ],
-            "acfe_group_modal_close": 0,
-            "acfe_group_modal_button": "",
-            "acfe_group_modal_size": "large"
+            ]
         }
     ],
     "location": [
@@ -79,5 +79,5 @@
     "acfe_form": 0,
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1710376135
+    "modified": 1724622478
 }

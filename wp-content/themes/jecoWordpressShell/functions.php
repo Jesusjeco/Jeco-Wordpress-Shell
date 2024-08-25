@@ -2,6 +2,32 @@
 
 include("includes/index.php");
 
+//Remove the wordpress version generatord
+remove_action('wp_head', 'wp_generator');
+
+// Removing the admin bar
+add_filter('show_admin_bar', '__return_false');
+
+//Add thumbnail support
+add_theme_support('post-thumbnails');
+
+//Add excerpt to posts and pages
+add_post_type_support('page', 'excerpt');
+add_post_type_support('post', 'excerpt');
+
+/*
+ * Register my Menu
+ */
+function register_my_menus()
+{
+    register_nav_menus(
+        array(
+            'main-menu' => __('Main menu'),
+        )
+    );
+}
+add_action('init', 'register_my_menus');
+
 /**
  * Enqueues stylesheets conditionally based on the current page being viewed.
  *
@@ -80,3 +106,25 @@ function jeco_enqueue_styles()
   }
 }
 add_action('wp_enqueue_scripts', 'jeco_enqueue_styles');
+
+/**
+ * Enqueues jQuery in the footer.
+ *
+ * This function ensures that jQuery is loaded in the footer of the theme,
+ * using the minified version provided by WordPress.
+ *
+ * @return void
+ */
+function jeco_enqueue_jquery()
+{
+  // Enqueue jQuery
+  wp_enqueue_script('jquery');
+
+  // Move jQuery to the footer
+  add_action('wp_enqueue_scripts', function () {
+    wp_scripts()->add_data('jquery', 'group', 1);
+    wp_scripts()->add_data('jquery', 'position', 1);
+  });
+}
+
+add_action('wp_enqueue_scripts', 'jeco_enqueue_jquery');

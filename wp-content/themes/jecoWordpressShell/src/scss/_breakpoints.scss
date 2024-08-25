@@ -1,18 +1,22 @@
 $media-query-breakpoints: (
-	// mobile: 320px,
-	// mobile-sm: 375px,
-	mobile-md: 414px,
-	// mobile-lg: 620px,
-	tablet-switch: 720px,
-	// tablet-sm: 768px,
-	// tablet-md: 840px,
-	tablet-lg: 992px,
-	// tablet-xl: 1024px,
-	desktop-switch: 1180px,
-	 desktop-md: 1240px,
-	desktop-lg: 1400px,
-	desktop-xl: 1600px,
-	// wrapper-break: 1636px,
+	// Mobile devices
+	mobile-xs: 320px, // Extra small mobile devices
+	mobile-sm: 375px, // Small mobile devices (e.g., iPhone 6/7/8)
+	mobile-md: 414px, // Medium mobile devices (e.g., iPhone Plus)
+
+	// Tablets
+	tablet-sm: 576px, // Small tablets (e.g., iPad Mini)
+	tablet-md: 768px, // Medium tablets (e.g., iPad)
+	tablet-lg: 992px, // Large tablets (e.g., iPad Pro)
+
+	// Desktops
+	desktop-sm: 1200px, // Small desktops and large tablets
+	desktop-md: 1440px, // Medium desktops
+	desktop-lg: 1600px, // Large desktops
+	desktop-xl: 1920px, // Extra large desktops
+
+	// Extra large screens
+	extra-large: 2560px, // For very large screens
 );
 
 @mixin for-bp($bp) {
@@ -20,4 +24,3 @@ $media-query-breakpoints: (
 		@content;
 	}
 }
-  

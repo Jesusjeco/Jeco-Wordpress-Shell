@@ -4,7 +4,7 @@ if( function_exists('acf_add_local_field_group') ):
 
 acf_add_local_field_group(array(
 	'key' => 'group_65df9b109596a',
-	'title' => 'Option page – Header',
+	'title' => 'Option - Header',
 	'fields' => array(
 		array(
 			'key' => 'field_65df9b11332b7',
@@ -83,7 +83,7 @@ acf_add_local_field_group(array(
 	'acfe_form' => 0,
 	'acfe_meta' => '',
 	'acfe_note' => '',
-	'modified' => 1722869437,
+	'modified' => 1724622478,
 ));
 
 endif;

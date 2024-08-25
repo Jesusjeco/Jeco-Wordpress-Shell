@@ -20,7 +20,7 @@ button,
 	height: 66px;
 	padding: 0;
 
-	@include for-bp("desktop-lg") {
+	@include for-bp("desktop-sm") {
 		font-size: 1.688rem;
 	}
 }
