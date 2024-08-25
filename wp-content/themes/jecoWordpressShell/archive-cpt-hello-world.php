@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main class="cpt-hello-world" id="main" role="main">
+<main class="archive-cpt-hello-world" id="main" role="main">
     <header class="page-header">
         <h1 class="page-title">Archive - cpt-hello-world</h1>
         <h2>archive-cpt-hello-world.php</h2>
