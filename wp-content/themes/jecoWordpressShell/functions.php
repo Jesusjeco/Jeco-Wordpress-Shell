@@ -16,12 +16,13 @@ include("includes/index.php");
  * Stylesheets are enqueued for:
  * - Default stylesheet for all pages (`default.css`)
  * - Front page (`front-page.php`)
- * - Blog home page (`home.php`)
- * - Single post (`single-post.php`)
- * - Single template (`single.php`)
  * - Custom page template (`hello-world.php`)
+ * - Single post (`single-post.php`)
  * - Custom post type archive (`cpt-hello-world`)
+ * - Archive pages (`archive.php`)
+ * - Single template (`single.php`)
  * - Default page template (`page.php`)
+ * - Blog home page (`home.php`)
  *
  * @return void
  */
