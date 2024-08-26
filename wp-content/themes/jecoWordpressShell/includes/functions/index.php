@@ -1,3 +1,3 @@
 <?php
-include "custom-clean-menu.php";
+include "menu.php";
 include "query.php";
