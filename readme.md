@@ -52,25 +52,11 @@ However, as a developer, you will be looking to create your own blocks.
 
 ## Adding Blocks
 
-To start adding your own blocks, go to the folder blocks/ located in the root of the theme.
+We all have our ways.
+For this theme I am letting a copy of a block registration in the theme folder/includes/blocks-setup/register-blocks.php.
+Right there you will see the code to register the hello-world I have as a default. You can copy and use it for your own blocks.
 
-There you will find a simple hello-world block as an example. You are free to use it, but it is there only for visual purposes and to offer a basic example of the setup.
-
-In my example I am using render.php as the render file and the style.scss for the styling. But there is no naming convention that you need to stick to it. Feel free.
-
-Create a folder with the name of your block, and create your .php and .scss files.
-
-In order to register the block, you will need to use the ACF-extended plugin.
-
-Please follow the instruction in the documentation of the plugin https://www.acf-extended.com/features/modules/dynamic-block-types
-
-Once the block has been registered, you will see your block available in the Gutenberg editor.
-
-Now you can use the ACF to add all the fields and functionalities you need. 
-
-At last, run the gulp command again to compile your SCSS and make it available.
-
-You are all set.
+Also, there is the register-styles.php. You can use it for the regsitration of the styles. Using that strucutre, the style files are going to be print in the head, instead of the footer and only if the current view is using the specific block you are setting up.
 
 # Notes
 As developers, you will not want to run the `gulp` command everytime. For that you can use the watcher functionality and it will re-compile your changes while you are working.

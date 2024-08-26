@@ -109,19 +109,15 @@
 		configuration. However, as a developer, you will be looking to create your own blocks.</p>
 
 	<h2>Adding Blocks</h2>
-	<p>To start adding your own blocks, go to the folder <code>blocks/</code> located in the root of the theme.</p>
-	<p>There you will find a simple hello-world block as an example. You are free to use it, but it is there only for
-		visual purposes and to offer a basic example of the setup.</p>
-	<p>In my example I am using <code>render.php</code> as the render file and <code>style.scss</code> for the styling.
-		But there is no naming convention that you need to stick to. Feel free.</p>
-	<p>Create a folder with the name of your block, and create your <code>.php</code> and <code>.scss</code> files.</p>
-	<p>In order to register the block, you will need to use the ACF-extended plugin.</p>
-	<p>Please follow the instruction in the documentation of the plugin <a
-			href="https://www.acf-extended.com/features/modules/dynamic-block-types" target="_blank">here</a>.</p>
-	<p>Once the block has been registered, you will see your block available in the Gutenberg editor.</p>
-	<p>Now you can use the ACF to add all the fields and functionalities you need.</p>
-	<p>At last, run the gulp command again to compile your SCSS and make it available.</p>
-	<p>You are all set.</p>
+	<p>We all have our ways.</p>
+	<p>For this theme I am letting a copy of a block registration in the theme
+		folder/includes/blocks-setup/register-blocks.php.</p>
+	<p>Right there you will see the code to register the hello-world I have as a default. You can copy and use it for your
+		own blocks.</p>
+
+	<p>Also, there is the register-styles.php. You can use it for the regsitration of the styles. Using that strucutre,
+		the style files are going to be print in the head, instead of the footer and only if the current view is using the
+		specific block you are setting up.</p>
 
 	<h2>Notes</h2>
 	<p>As developers, you will not want to run the <code>gulp</code> command every time. For that you can use the watcher
