@@ -17,11 +17,10 @@
     if (isset($header_data))
         $logo_url = $header_data['logo']['url'];
     ?>
-    <p>Header</p>
     <header class="menu">
         <?php
         //Printing menu
-        echo clean_custom_menus($logo_url); ?>
+        echo display_main_menu($logo_url); ?>
     </header>
 
     <!-- Breadcrumbs -->
