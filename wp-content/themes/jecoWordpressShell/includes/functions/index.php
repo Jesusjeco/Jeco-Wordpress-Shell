@@ -1,3 +1,3 @@
 <?php
-include "menu.php";
+include "custom-menu.php";
 include "query.php";
