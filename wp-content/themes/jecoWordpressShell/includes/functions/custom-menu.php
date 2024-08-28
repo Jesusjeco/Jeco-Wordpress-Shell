@@ -12,22 +12,27 @@ function display_main_menu($logo_url = null)
 		$logo_html = $home_link . esc_html(get_bloginfo('name')) . '</a>';
 	}
 
-	// Prepare the menu HTML using nowdoc syntax
-	$menu_html = <<<HTML
-		<nav>
-				<div class="menu-logo">{$logo_html}</div>
-	HTML;
+	if (has_nav_menu('main-menu')) {
+		// Prepare the menu HTML using nowdoc syntax
+		$menu_html = <<<HTML
+			<nav>
+					<div class="menu-logo">{$logo_html}</div>
+		HTML;
 
-	// Append the wp_nav_menu output to the menu HTML
-	$menu_html .= wp_nav_menu(array(
-		'theme_location' => 'main-menu',
-		'walker'         => new My_Custom_Walker(),
-		'echo'           => false, // Don't echo the menu, return it as a string
-	));
+		// Append the wp_nav_menu output to the menu HTML
+		$menu_html .= wp_nav_menu(array(
+			'theme_location' => 'main-menu',
+			'walker'         => new My_Custom_Walker(),
+			'echo'           => false, // Don't echo the menu, return it as a string
+		));
 
-	$menu_html .= <<<HTML
-		</nav>
-	HTML;
+		$menu_html .= <<<HTML
+			</nav>
+		HTML;
+	} else {
+		// Return the message if no menu is created yet
+		return '<p>Menu not created. Go to Appearance -> Menus and create one.</p>';
+	}
 
 	// Return the complete menu HTML
 	return $menu_html;
