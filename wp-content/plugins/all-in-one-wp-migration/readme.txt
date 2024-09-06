@@ -71,6 +71,7 @@ The plugin comes preinstalled on all Bitnami WordPress sites running on AWS, Goo
 * Government Reliability: Following a directive to improve digital accessibility, a government agency used our plugin to migrate their content to a new, compliant platform without impacting public access to critical information.
 
 = Contact us =
+* [Report a security vulnerability](https://patchstack.com/database/vdp/all-in-one-wp-migration)
 * [Get free help from us here](https://servmask.com/help)
 * [Report a bug or request a feature](https://servmask.com/help)
 * [Find out more about us](https://servmask.com)

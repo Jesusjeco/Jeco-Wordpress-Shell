@@ -1,4 +1,9 @@
 <?php
+// Begin AIOWPSEC Firewall
+if (file_exists('/var/www/html/aios-bootstrap.php')) {
+	include_once('/var/www/html/aios-bootstrap.php');
+}
+// End AIOWPSEC Firewall
 /**
  * #ddev-generated: Automatically generated WordPress settings file.
  * ddev manages this file and may delete or overwrite the file unless this comment is removed.
@@ -14,14 +19,14 @@ define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
 /** Authentication Unique Keys and Salts. */
-define( 'AUTH_KEY', 'RdVzwXYEuKqgqyJfvMengjNrgBZqgeeizoLhJTiOdlIYcTIGJncKFBHQRbdQYvms' );
-define( 'SECURE_AUTH_KEY', 'ilKSwRvIxcwjHRHzkpnGCYiazzBDnbpqDtFmiqKyiUNkZzqhuTerPJKqQlaQVxbv' );
-define( 'LOGGED_IN_KEY', 'XYrFjxqlccAsuHCernOhkuXwfJFOCzxYuRgHKWKqJMxDnJJuRGLJqSkzJStqhdFe' );
-define( 'NONCE_KEY', 'psHVcWakkoaIFERAmKARjDUfdtIaZAoPsWydCilLSxcSSWLbDDpnUkesgVdGlsrS' );
-define( 'AUTH_SALT', 'APIYCRCFNDDeeBpOynlgCogymvrEdVYOGWoPpxxdaklNWIebwdFTInWKWGRujDiQ' );
-define( 'SECURE_AUTH_SALT', 'CkaFzFvvGgDtVaUZhWInFchJwvbfWOrHSldGqLMSECTbHcElAEHKUnWdmWMCmAMb' );
-define( 'LOGGED_IN_SALT', 'BHCreulhkXNptEfGmuFcObfyRqaARVqLYTowggyrFwthPZewQKTeZWMCFaYIFDnM' );
-define( 'NONCE_SALT', 'lFEKwGGmQopYGTCudaucVsCGGmNfkCHBiTOVFmCvavevXNGxvhbdBrBeCowxzUOe' );
+define( 'AUTH_KEY', 'UmXZHsUyZyXvtgQNOLiLBXBcQsLECbOAOMhOfvkQQkcPROBzhqKxPSrUfFXgPxjs' );
+define( 'SECURE_AUTH_KEY', 'IfmZKnMOAoLSACZfmfpHJGTgHgnhLMepCFMxrKgCtYQgEEWEyWKlcafSQtQHMXQq' );
+define( 'LOGGED_IN_KEY', 'dbrapvHkWUmVrmuMSJJTEIQBofhrcJsfDQmnufHhelHCoDTpzKVsITCPwwyEaVFD' );
+define( 'NONCE_KEY', 'WlkbaRzGLVFEqlFJvdidGFiFhHzOXexaPvuYZHCKpMxbYWjPPeulaaXkKAxCYbbS' );
+define( 'AUTH_SALT', 'QlgsRFNGyAJcMlDtwGdGrIzpufYPyCnKCgANWsfJKkpkGCLJgHgKKTrhbkroiIeO' );
+define( 'SECURE_AUTH_SALT', 'PkxkNlsnXvkaLZHssLftmeyrdULeIJscrFcNIUrZSqzQnvTcpvxlPqtixRAUrDnZ' );
+define( 'LOGGED_IN_SALT', 'CHYGYxPOknVRpfLzlZJhkOdXdRvmhNEdeXMPCgraQTNYcvrTcCVcmBAuyxYzkeOq' );
+define( 'NONCE_SALT', 'FXuRwtWOtgizuiNyMIwaGFxBBDgJLpSiAbxWGvduFKFMxcRySAwtIukQefttbXpF' );
 
 /* Add any custom values between this line and the "stop editing" line. */
 

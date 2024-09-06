@@ -14,14 +14,20 @@ define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
 /** Authentication Unique Keys and Salts. */
-define( 'AUTH_KEY', 'vjgsFsNTRpTlZMGPMLuzRmCFXHgoXinbcUVnRlPJmBzdbzbNIjXiLSUipvPYalRr' );
-define( 'SECURE_AUTH_KEY', 'XahmgBaGtEsNijggyXDntwrwkNZZwZuZGQltQhNnRASqNFeYufueWSTgzDPXseth' );
-define( 'LOGGED_IN_KEY', 'KyYAWOOxmdACcpgQZIDBboDnAeDXlVSSSjdMSAkligJwqnSMKLRyZYxnEWBcnkAd' );
-define( 'NONCE_KEY', 'hGASParnSXsESgXLKzgVXnqqoqLBsNFdrBSprGfotUXVgZryCIPDmPWVTydoDnFP' );
-define( 'AUTH_SALT', 'kTDYZeTdWRxmjouLaIyMdJJKHyBiHtKahONkquAnScdboTUiRkJNNnjtHzTUbnfe' );
-define( 'SECURE_AUTH_SALT', 'OwdWyEkOaLQjfxUOKtbLDQWrPItWPBcRKXvsnLgelXGHNinaIsZwOqJMCSaUOWwz' );
-define( 'LOGGED_IN_SALT', 'sBGnfZhngELwxhKNjbTWsqnHlYQqojyuOVbyJtXncsiMqFcZNHszYsfmplcEqCtw' );
-define( 'NONCE_SALT', 'LQAChKWHBlWhOLNXfSsBlJJRdHukCEestoydpTtbAmgWVAolKypVhKwqAnqRJSmb' );
+define( 'AUTH_KEY', 'UmXZHsUyZyXvtgQNOLiLBXBcQsLECbOAOMhOfvkQQkcPROBzhqKxPSrUfFXgPxjs' );
+define( 'SECURE_AUTH_KEY', 'IfmZKnMOAoLSACZfmfpHJGTgHgnhLMepCFMxrKgCtYQgEEWEyWKlcafSQtQHMXQq' );
+define( 'LOGGED_IN_KEY', 'dbrapvHkWUmVrmuMSJJTEIQBofhrcJsfDQmnufHhelHCoDTpzKVsITCPwwyEaVFD' );
+define( 'NONCE_KEY', 'WlkbaRzGLVFEqlFJvdidGFiFhHzOXexaPvuYZHCKpMxbYWjPPeulaaXkKAxCYbbS' );
+define( 'AUTH_SALT', 'QlgsRFNGyAJcMlDtwGdGrIzpufYPyCnKCgANWsfJKkpkGCLJgHgKKTrhbkroiIeO' );
+define( 'SECURE_AUTH_SALT', 'PkxkNlsnXvkaLZHssLftmeyrdULeIJscrFcNIUrZSqzQnvTcpvxlPqtixRAUrDnZ' );
+define( 'LOGGED_IN_SALT', 'CHYGYxPOknVRpfLzlZJhkOdXdRvmhNEdeXMPCgraQTNYcvrTcCVcmBAuyxYzkeOq' );
+define( 'NONCE_SALT', 'FXuRwtWOtgizuiNyMIwaGFxBBDgJLpSiAbxWGvduFKFMxcRySAwtIukQefttbXpF' );
+
+/* Add any custom values between this line and the "stop editing" line. */
+
+
+
+/* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */
 defined( 'ABSPATH' ) || define( 'ABSPATH', dirname( __FILE__ ) . '/' );
