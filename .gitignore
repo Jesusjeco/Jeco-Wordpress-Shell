@@ -1,7 +1,13 @@
-wp-content/plugins/all-in-one-wp-migration/storage/zlxk2cnlgydd/*.wpress
-wp-content/ai1wm-backups/*.wpress 
-vendor/
+# Avoiding to save All in one Migration settings.
+wp-content/ai1wm-backups/
+vendor/ 
 
+# Avoiding to save All in one Security settings.
+wp-content/aiowps_backups/
+aios-bootstrap.php
+wp-content/uploads/aios/firewall-rules/settings.php
+
+# Avoiding other files and settings
 wp-content/uploads/
 wp-content/ewww/
 .htaccess
