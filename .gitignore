@@ -5,3 +5,6 @@ vendor/
 wp-content/uploads/
 wp-content/ewww/
 .htaccess
+
+#This is to avoid All In one Security rules to be saved in the repo
+wp-content/uploads/aios/firewall-rules/settings.php
