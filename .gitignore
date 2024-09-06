@@ -1,7 +1,7 @@
 
 # Avoiding to save All in one Migration settings.
 wp-content/ai1wm-backups/
-vendor/
+vendor/ 
 
 # Avoiding to save All in one Security settings.
 wp-content/aiowps_backups/
