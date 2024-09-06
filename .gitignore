@@ -7,4 +7,5 @@ wp-content/ewww/
 .htaccess
 
 #This is to avoid All In one Security rules to be saved in the repo
+aios-bootstrap.php
 wp-content/uploads/aios/firewall-rules/settings.php
