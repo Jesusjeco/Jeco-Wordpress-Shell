@@ -11,3 +11,13 @@ wp-content/uploads/aios/firewall-rules/settings.php
 wp-content/uploads/
 wp-content/ewww/
 .htaccess
+
+# Avoiding not necesary plugins for the theme
+# If you are going to use this theme for a new project, I suggest to remove this lines so you can add the plugins you require to your repo
+wp-content/plugins/all-in-one-wp-migration/
+wp-content/plugins/all-in-one-wp-security-and-firewall/
+wp-content/plugins/disable-comments/
+wp-content/plugins/duplicate-page/
+wp-content/plugins/ewww-image-optimizer/
+wp-content/plugins/svg-support/
+wp-content/plugins/wp-optimize/
