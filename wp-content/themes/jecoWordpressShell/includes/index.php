@@ -1,5 +1,4 @@
 <?php
-
 // Area to include cron jobs
 include "CPTs/index.php";
 include "functions/index.php";
