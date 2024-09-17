@@ -360,8 +360,9 @@ if ( ! class_exists( 'Ai1wmve_Schedule_Event' ) ) {
 			add_filter( 'ai1wm_notification_ok_toggle', array( $this, 'is_success_notification_enabled' ) );
 			add_filter( 'ai1wm_notification_ok_email', array( $this, 'notification_email' ) );
 
-			$file_size = ai1wm_backup_size( $params );
-			if ( ! $file_size ) {
+			if ( is_file( ai1wm_backup_path( $params ) ) ) {
+				$file_size = ai1wm_backup_size( $params );
+			} else {
 				$file_size = ai1wm_archive_size( $params );
 			}
 
@@ -374,7 +375,7 @@ if ( ! class_exists( 'Ai1wmve_Schedule_Event' ) ) {
 			}
 
 			Ai1wm_Notification::ok(
-				sprintf( __( '✅ Scheduled event has completed (%s)', AI1WM_PLUGIN_NAME ), parse_url( site_url(), PHP_URL_HOST ) . parse_url( site_url(), PHP_URL_PATH ) ),
+				sprintf( __( 'Scheduled event has completed (%s)', AI1WM_PLUGIN_NAME ), parse_url( site_url(), PHP_URL_HOST ) . parse_url( site_url(), PHP_URL_PATH ) ),
 				$notification
 			);
 		}
@@ -392,7 +393,7 @@ if ( ! class_exists( 'Ai1wmve_Schedule_Event' ) ) {
 			}
 
 			Ai1wm_Notification::error(
-				sprintf( __( '❌ Scheduled event has failed (%s)', AI1WM_PLUGIN_NAME ), parse_url( site_url(), PHP_URL_HOST ) . parse_url( site_url(), PHP_URL_PATH ) ),
+				sprintf( __( 'Scheduled event has failed (%s)', AI1WM_PLUGIN_NAME ), parse_url( site_url(), PHP_URL_HOST ) . parse_url( site_url(), PHP_URL_PATH ) ),
 				$notification
 			);
 		}
