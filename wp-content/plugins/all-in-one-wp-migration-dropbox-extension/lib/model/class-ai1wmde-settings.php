@@ -320,7 +320,7 @@ class Ai1wmde_Settings {
 	}
 
 	public function get_notify_error_subject() {
-		return get_option( 'ai1wmde_dropbox_notify_error_subject', sprintf( __( '❌ Backup to Dropbox has failed (%s)', AI1WMDE_PLUGIN_NAME ), parse_url( site_url(), PHP_URL_HOST ) . parse_url( site_url(), PHP_URL_PATH ) ) );
+		return get_option( 'ai1wmde_dropbox_notify_error_subject', sprintf( __( 'Backup to Dropbox has failed (%s)', AI1WMDE_PLUGIN_NAME ), parse_url( site_url(), PHP_URL_HOST ) . parse_url( site_url(), PHP_URL_PATH ) ) );
 	}
 
 	public function set_notify_email( $email ) {

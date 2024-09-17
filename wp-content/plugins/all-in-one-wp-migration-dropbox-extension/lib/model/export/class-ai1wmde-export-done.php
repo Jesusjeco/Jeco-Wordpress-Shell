@@ -39,7 +39,7 @@ class Ai1wmde_Export_Done {
 
 		// Send notification
 		Ai1wm_Notification::ok(
-			sprintf( __( '✅ Backup to Dropbox has completed (%s)', AI1WMDE_PLUGIN_NAME ), parse_url( site_url(), PHP_URL_HOST ) . parse_url( site_url(), PHP_URL_PATH ) ),
+			sprintf( __( 'Backup to Dropbox has completed (%s)', AI1WMDE_PLUGIN_NAME ), parse_url( site_url(), PHP_URL_HOST ) . parse_url( site_url(), PHP_URL_PATH ) ),
 			sprintf( __( '<p>Your site %s was successfully exported to Dropbox.</p>', AI1WMDE_PLUGIN_NAME ), site_url() ) .
 			sprintf( __( '<p>Date: %s</p>', AI1WMDE_PLUGIN_NAME ), date_i18n( 'r' ) ) .
 			sprintf( __( '<p>Backup file: %s</p>', AI1WMDE_PLUGIN_NAME ), ai1wm_archive_name( $params ) ) .
