@@ -19,7 +19,7 @@ function jeco_install_plugins_on_theme_activation()
     "duplicate-page",
     "ewww-image-optimizer",
     "svg-support",
-    "wp-optimize"
+    "megamenu"
   ];
 
   foreach ($plugin_slugs as $slug) {
