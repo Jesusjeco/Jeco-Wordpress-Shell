@@ -13,14 +13,17 @@
 <body>
     <?php
     $header_data = get_field('header_data', 'option');
-    $logo_url  = null;
-    if (isset($header_data))
+
+    if (isset($header_data['logo']) && $header_data['logo'])
         $logo_url = $header_data['logo']['url'];
+    else
+        $logo_url = null;
     ?>
     <header class="menu">
         <?php
         //Printing menu
-        echo display_main_menu($logo_url); ?>
+        echo display_main_menu($logo_url);
+        ?>
     </header>
 
     <!-- Breadcrumbs -->
