@@ -15,6 +15,15 @@ $color-button-text: $color-white;
 $color-button-background: $color-grey;
 $color-button-border: $color-grey;
 
+html {
+	background-color: $color-site-background;
+}
+
+html,
+body {
+	color: $color-text;
+}
+
 a {
 	color: $color-link;
 }
