@@ -1,11 +1,37 @@
 // Colors palette
-:root {
-	--color-black: #000000; 
-	--color-white: #ffffff;
-	--color-grey: #e7e7e7;
+$color-black: #000000;
+$color-white: #ffffff;
+$color-grey: #e5e7eb;
+$color-blue: blue;
 
-	--primary-color: #dc002a;
-	--color-scarlet: #9d2a0d;
+$color-site-background: $color-white;
+$color-title: $color-black;
+$color-text: $color-black;
+$color-border: $color-grey;
 
-	--link-color: var(--primary-color);
+$color-link: $color-blue;
+
+$color-button-text: $color-white;
+$color-button-background: $color-grey;
+$color-button-border: $color-grey;
+
+a {
+	color: $color-link;
+}
+
+button,
+.button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+	border: solid 1px $color-button-border;
+	color: $color-button-text;
+	background-color: $color-button-background;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+	background-color: darken($color-button-background, 10%);
 }

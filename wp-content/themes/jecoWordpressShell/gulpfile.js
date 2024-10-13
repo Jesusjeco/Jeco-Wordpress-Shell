@@ -16,15 +16,6 @@ function compilePagesSCSS(cb) {
 		.pipe(dest("dist/css/"));
 } //compilePagesSCSS
 
-function compileBlocksSCSS(cb) {
-	cb();
-	return src("blocks/**/*.scss")
-		.pipe(sass())
-		.pipe(autoprefixer())
-		.pipe(cleanCSS())
-		.pipe(dest("dist/css/blocks/"));
-} //compileBlocksSCSS
-
 function compileJS(cb) {
 	return (
 		src("node_modules/jquery/dist/jquery.min.js")
@@ -62,7 +53,6 @@ function compileJS(cb) {
 
 exports.default = series(
 	compilePagesSCSS,
-	compileBlocksSCSS,
 	compileJS,
 	// compileBootstrapJS,
 	// compileSwiperCss,
@@ -70,5 +60,4 @@ exports.default = series(
 );
 exports.watcher = () => {
 	watch(["src/scss/*.scss"], compilePagesSCSS);
-	watch("blocks/**/*.scss", compileBlocksSCSS);
 };

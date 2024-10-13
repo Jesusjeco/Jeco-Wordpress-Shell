@@ -3,7 +3,7 @@
 <main class="archive" id="main" role="main">
     <header class="page-header">
         <h1 class="page-title">Archive/h1>
-        <h2>archive.php</h2>
+            <h2>archive.php</h2>
     </header>
 
     <div class="posts-wrapper">
