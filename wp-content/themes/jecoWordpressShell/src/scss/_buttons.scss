@@ -1,37 +1,14 @@
 button,
-.button {
-	font-family: var(--font-oswald);
-	font-weight: var(--font-bold-default);
-	text-transform: uppercase;
-	text-decoration: none;
-
-	display: inline-flex;
-	align-items: center;
-	font-size: 1.125rem;
-	justify-content: center;
-
-	border: none;
-	border-radius: 6px;
-
+.button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+	border-radius: 5px;
+	display: inline-block;
+	padding: 0.75em 1.25em;
+	font-size: 1rem;
+	font-weight: 600;
+	text-align: center;
 	cursor: pointer;
-
-	min-width: 200px;
-	width: 228px;
-	height: 66px;
-	padding: 0;
-
-	@include for-bp("desktop-sm") {
-		font-size: 1.688rem;
-	}
-}
-.button-primary {
-	background: var(--primary-color);
-	color: var(--color-white);
-}
-
-.button-form {
-	background: var(--color-scarlet);
-	color: var(--color-white);
-	text-transform: capitalize;
-    font-size: 1.2rem;
+	transition: background-color 0.3s ease;
 }

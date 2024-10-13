@@ -20,11 +20,11 @@ add_post_type_support('post', 'excerpt');
  */
 function register_my_menus()
 {
-    register_nav_menus(
-        array(
-            'main-menu' => __('Main menu'),
-        )
-    );
+  register_nav_menus(
+    array(
+      'main-menu' => __('Main menu'),
+    )
+  );
 }
 add_action('init', 'register_my_menus');
 
@@ -63,11 +63,12 @@ function jeco_enqueue_styles()
     return;
   }
 
-  //Loading when a page uses the hello-world.php template
-  if (is_page_template('templates/hello-world.php')) {
-    wp_enqueue_style('hello-world-style', STYLES_PATH . 'hello-world.css');
-    return;
-  }
+  //Loading when a page uses a template, for example  the hello-world.php template
+  //Remember to create a .scss file in the /src directory and after compiling, you can import it with this function
+  // if (is_page_template('templates/hello-world.php')) {
+  //   wp_enqueue_style('hello-world-style', STYLES_PATH . 'hello-world.css');
+  //   return;
+  // }
 
   //Loading in single-post.php file
   if (is_singular('post')) {
