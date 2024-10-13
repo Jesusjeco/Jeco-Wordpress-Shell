@@ -34,9 +34,7 @@ h6,
 .h6 {
 	@include heading-sizes(-1);
 	line-height: 1.4;
-	/* 1.4 times the font size for compact text */
 	margin-bottom: 0.5rem;
-	/* Tight spacing for smaller headings */
 }
 
 h5,
@@ -45,45 +43,35 @@ a,
 span {
 	@include heading-sizes(0);
 	line-height: 1.5;
-	/* Standard readable line height */
 	margin-bottom: 0.75rem;
-	/* Moderate spacing for regular text */
 }
 
 h4,
 .h4 {
 	@include heading-sizes(1);
 	line-height: 1.4;
-	/* Slightly compact to maintain proximity */
 	margin-bottom: 1rem;
-	/* A bit more space to set off from text */
 }
 
 h3,
 .h3 {
 	@include heading-sizes(2);
 	line-height: 1.3;
-	/* Slightly tighter to fit the larger size */
 	margin-bottom: 1.2rem;
-	/* Larger margin to balance the size */
 }
 
 h2,
 .h2 {
 	@include heading-sizes(3);
 	line-height: 1.2;
-	/* Tight line-height for large text */
 	margin-bottom: 1.5rem;
-	/* More margin to emphasize hierarchy */
 }
 
 h1,
 .h1 {
 	@include heading-sizes(4);
 	line-height: 1.2;
-	/* Tightest line height for very large headings */
 	margin-bottom: 2rem;
-	/* Large margin to separate the most important heading */
 }
 
 button,
