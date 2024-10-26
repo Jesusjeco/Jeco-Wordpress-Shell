@@ -18,7 +18,6 @@ function jeco_install_plugins_on_theme_activation()
     "disable-comments",
     "duplicate-page",
     "ewww-image-optimizer",
-    "svg-support",
     "megamenu"
   ];
 

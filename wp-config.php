@@ -14,14 +14,14 @@ define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
 /** Authentication Unique Keys and Salts. */
-define( 'AUTH_KEY', 'dOHZQQEvpxFhzaHzqRdvwRskRUcFUMLFzwvgLqWMbMYpfQcgklwmiINgEGXeOBDe' );
-define( 'SECURE_AUTH_KEY', 'ZabKQnjloeLpXTtkOVCOBouUmWOemRVrhwUuPPuEnjBVkaTckzMNArdUxZfIzQsx' );
-define( 'LOGGED_IN_KEY', 'hqoeibIKsbAxiFugMReqqQqrfiMWZdTVijUfeQlrjoTLrGyBcYddwRLxOWHJlvlx' );
-define( 'NONCE_KEY', 'MHVsGzCpxxUVqFEvizSvlGlBhYyxEPpoKIGIAWskxBTHaWdVblRQNVDqjHgTzvqm' );
-define( 'AUTH_SALT', 'xprAAQKVemmkeAVtsjcAIqIrBtyVECKDGmjhfGEdbEEIxbAufKhAVZFEvYuVTqeP' );
-define( 'SECURE_AUTH_SALT', 'cWMnRTJajbjaxixLupbbuGAQjqPWaYHWLLDxDldXNkentAhDkfPGqvcTNCNCAjdn' );
-define( 'LOGGED_IN_SALT', 'XLMhLYSpzjFBZiVnuKGcgZzDMsrXNCPUpRiMSGUVZhjDMHOVwFWnHEcOKAnGMtpY' );
-define( 'NONCE_SALT', 'kJSzTeZLHEusYnlfhUEaMyImMIxJRWXcXRkAgnksRXAsUzuNMjetpfZJpsmLOCVx' );
+define( 'AUTH_KEY', 'DpzpfnwWklYxKiYIaDIWEScYqJzacbehPoPafjSYqviwvsWeZOsDxEkfjCXdMpWb' );
+define( 'SECURE_AUTH_KEY', 'GbepdkSKbQDzyhAcOIOGXNhLLByuJfZfPthHSqLOHLtCbGZStJStybFjXSaMqwrv' );
+define( 'LOGGED_IN_KEY', 'rWPTqGvSpVQmEkwcxtrrQxFgyHEJAnlTvxFfmHDofCWlvsZcsUuGsltDknZYxyaI' );
+define( 'NONCE_KEY', 'JVcjFJJexHadXcCmKIGEgPmmVrrOBSTGjsnJumMSWceiCYzHNWSIQjfJqwIstxMW' );
+define( 'AUTH_SALT', 'zLkWpxoIWQqqaWXQGhlnLRUiqikFBjFfbmPNOUrRKKjfUZEswQoFqpSzSBdxISQL' );
+define( 'SECURE_AUTH_SALT', 'UKPdnKNpXVfGjXbYgISEcaZMATLQMEwUMTxTffaRWrqOrhhthkQRxQHhbNywPZPL' );
+define( 'LOGGED_IN_SALT', 'vhPyIXCEziFzcmsNzhRxjSnELHTpFvYEFVxHmFgLdOJXJPTdIScKHirvGXXZPMKl' );
+define( 'NONCE_SALT', 'IqyhlUqCIfUEYbNDjGlBTKtEwjVYNUJhBHCJFsgrtBdkeKQwDoexsFKzGGwuktTl' );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
@@ -33,7 +33,7 @@ define( 'NONCE_SALT', 'kJSzTeZLHEusYnlfhUEaMyImMIxJRWXcXRkAgnksRXAsUzuNMjetpfZJp
 defined( 'ABSPATH' ) || define( 'ABSPATH', dirname( __FILE__ ) . '/' );
 
 // Include for settings managed by ddev.
-$ddev_settings = dirname( __FILE__ ) . '/wp-config-ddev.php';
+$ddev_settings = __DIR__ . '/wp-config-ddev.php';
 if ( ! defined( 'DB_USER' ) && getenv( 'IS_DDEV_PROJECT' ) == 'true' && is_readable( $ddev_settings ) ) {
 	require_once( $ddev_settings );
 }
